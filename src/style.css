@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-yellow: #f9d428;
+  --color-brand-accent: #ffeeaf;
+  --color-sidebar-active-bg: #ffeeaf;
+  --color-sidebar-normal-text: rgba(0, 0, 0, 0.8);
+  --color-sidebar-hover-text: #000000;
+  
+  --font-sans: 'Poppins', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+  
+  --spacing-sidebar-expanded: 15rem;
+  --spacing-sidebar-collapsed: 78px;
+}
+
+/* Scrollbar styles matching the application's clean design */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
