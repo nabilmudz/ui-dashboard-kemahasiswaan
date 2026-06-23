@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import DashboardLayout from '../layouts/DashboardLayout.vue';
 import HomeView from '../views/HomeView.vue';
-import BarangView from '../views/BarangView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import AnalyticsView from '../views/AnalyticsView.vue';
 
@@ -18,16 +17,63 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
-        path: 'barang',
-        name: 'barang',
-        component: BarangView,
-        meta: { requiresAuth: true }
-      },
-      {
         path: 'analytics',
-        name: 'analytics',
         component: AnalyticsView,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
+        children: [
+          {
+            path: '',
+            redirect: '/analytics/overview'
+          },
+          {
+            path: 'overview',
+            name: 'analytics-overview',
+            component: () => import('../views/analytics/OverviewView.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'proposals',
+            name: 'analytics-proposals',
+            component: () => import('../views/analytics/ProposalsView.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'pkm',
+            name: 'analytics-pkm',
+            component: () => import('../views/analytics/PkmView.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'pmw',
+            name: 'analytics-pmw',
+            component: () => import('../views/analytics/PmwView.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'beasiswa',
+            name: 'analytics-beasiswa',
+            component: () => import('../views/analytics/BeasiswaView.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'prestasi',
+            name: 'analytics-prestasi',
+            component: () => import('../views/analytics/PrestasiView.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'recap',
+            name: 'analytics-recap',
+            component: () => import('../views/analytics/RecapView.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'venues',
+            name: 'analytics-venues',
+            component: () => import('../views/analytics/VenuesView.vue'),
+            meta: { requiresAuth: true }
+          }
+        ]
       },
       {
         path: 'sso-profile',
@@ -80,15 +126,6 @@ router.beforeEach(async (to, from, next) => {
   } else if (to.meta.guestOnly && isAuth) {
     next({ name: 'home' });
   } else {
-    // Role-Based Access Control
-    if (to.name === 'barang' && isAuth) {
-      // Mahasiswa is restricted from admin/SARPRAS/POS tools according to Permission Matrix
-      if (authStore.user?.role === 'MAHASISWA') {
-        console.warn('Access denied: role MAHASISWA cannot access administrative modules');
-        next({ name: 'home' });
-        return;
-      }
-    }
     next();
   }
 });

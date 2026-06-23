@@ -33,37 +33,9 @@
             <span class="text-gray-400 font-medium">NPA</span>
             <span class="text-gray-800 font-semibold font-mono">{{ authStore.user?.npa }}</span>
           </div>
-          <div class="flex justify-between">
-            <span class="text-gray-400 font-medium">ID Pengguna</span>
-            <span class="text-gray-800 font-semibold font-mono">{{ authStore.user?.id }}</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-400 font-medium">Status Akun</span>
-            <span class="text-emerald-600 font-semibold flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Aktif
-            </span>
-          </div>
         </div>
       </div>
 
-      <!-- JWT Token Details -->
-      <div class="lg:col-span-2 flex flex-col gap-6">
-        <div class="bg-white rounded-2xl shadow-sm p-6 flex flex-col">
-          <h4 class="text-sm font-semibold text-gray-800 mb-4 border-b border-gray-100 pb-2">Informasi Token JWT</h4>
-          
-          <div class="flex flex-col gap-4 text-xs">
-            <div class="flex flex-col bg-gray-50 p-3 rounded-lg font-mono break-all leading-relaxed">
-              <span class="text-[9px] uppercase tracking-wider text-indigo-600 font-bold mb-1">Access Token</span>
-              <p class="text-[10px] text-gray-500">{{ authStore.accessToken }}</p>
-            </div>
-            
-            <div class="flex flex-col bg-gray-50 p-3 rounded-lg font-mono break-all leading-relaxed">
-              <span class="text-[9px] uppercase tracking-wider text-amber-600 font-bold mb-1">Refresh Token</span>
-              <p class="text-[10px] text-gray-500">{{ authStore.refreshToken }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>

@@ -8,7 +8,7 @@
       <router-link to="/" class="logo-details">
         <div class="img">
           <img 
-            src="/src/assets/logo.png" 
+            src="/src/assets/LOGO POLBAN 4K 1.png" 
             alt="Logo" 
             width="35" 
             height="35" 
@@ -17,10 +17,10 @@
           />
         </div>
         <span 
-          class="logo_name text-[16px] font-semibold truncate text-black transition-opacity duration-300 ml-1"
+          class="logo_name text-[16px] font-semibold truncate text-black transition-opacity duration-300 ml-1 leading-5"
           :class="[isCollapsed ? 'opacity-0 pointer-events-none' : 'opacity-100']"
         >
-          SSO Dashboard
+          Dashboard <br> Kemahasiswaan
         </span>
       </router-link>
     </div>
@@ -79,7 +79,6 @@ defineProps({
 });
 
 const isMahasiswa = computed(() => authStore.user?.role === 'MAHASISWA');
-const isKajur = computed(() => authStore.user?.role === 'KAJUR');
 const isAdmin = computed(() => ['STAFF', 'WD3', 'KLI'].includes(authStore.user?.role));
 
 const allowedAppSources = computed(() => {
@@ -92,25 +91,25 @@ const dashboardChildren = computed(() => {
   if (isMahasiswa.value) return [];
   
   const children = [
-    { to: '/analytics?tab=overview', label: 'Ringkasan Statistik', icon: 'fa-regular fa-chart-pie' },
-    { to: '/analytics?tab=proposals', label: 'Antrean Pending', icon: 'fa-regular fa-list-check' }
+    { to: '/analytics/overview', label: 'Ringkasan Statistik', icon: 'fa-regular fa-chart-pie' },
+    { to: '/analytics/proposals', label: 'Antrean Pending', icon: 'fa-regular fa-list-check' }
   ];
 
   if (allowedAppSources.value.includes('PKM') && isAdmin.value) {
-    children.push({ to: '/analytics?tab=pkm', label: 'PKM', icon: 'fa-regular fa-lightbulb' });
+    children.push({ to: '/analytics/pkm', label: 'PKM', icon: 'fa-regular fa-lightbulb' });
   }
   if (allowedAppSources.value.includes('PMW') && isAdmin.value) {
-    children.push({ to: '/analytics?tab=pmw', label: 'PMW', icon: 'fa-regular fa-briefcase' });
+    children.push({ to: '/analytics/pmw', label: 'PMW', icon: 'fa-regular fa-briefcase' });
   }
-  if (allowedAppSources.value.includes('BEASISWA') && (isAdmin.value || isKajur.value)) {
-    children.push({ to: '/analytics?tab=beasiswa', label: 'Proposal', icon: 'fa-regular fa-file-signature' });
+  if (allowedAppSources.value.includes('BEASISWA') && (isAdmin.value)) {
+    children.push({ to: '/analytics/beasiswa', label: 'Proposal', icon: 'fa-regular fa-file-signature' });
   }
   if (allowedAppSources.value.includes('PRESTASI') && isAdmin.value) {
-    children.push({ to: '/analytics?tab=prestasi', label: 'Kompetisi & Prestasi', icon: 'fa-regular fa-trophy' });
+    children.push({ to: '/analytics/prestasi', label: 'Kompetisi & Prestasi', icon: 'fa-regular fa-trophy' });
   }
   if (allowedAppSources.value.includes('SARPRAS') && isAdmin.value) {
-    children.push({ to: '/analytics?tab=recap', label: 'Rekap Ormawa', icon: 'fa-regular fa-chart-column' });
-    children.push({ to: '/analytics?tab=venues', label: 'Okupansi Venue', icon: 'fa-regular fa-door-open' });
+    children.push({ to: '/analytics/recap', label: 'Rekap Ormawa', icon: 'fa-regular fa-chart-column' });
+    children.push({ to: '/analytics/venues', label: 'Okupansi Venue', icon: 'fa-regular fa-door-open' });
   }
 
   return children;
