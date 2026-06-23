@@ -81,7 +81,7 @@ async function loadApprovedVenues() {
   loading.value = true;
   errorMsg.value = '';
   try {
-    const res = await api.get('/api/v1/dashboard/venues/approved');
+    const res = await api.get('/dashboard/venues/approved');
     approvedVenues.value = res.data?.data || [];
   } catch (err) {
     console.error('Error loading venue okupansi list:', err);

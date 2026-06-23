@@ -184,6 +184,9 @@ const activeEvents = computed(() => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return events.value.filter(ev => {
+    // Filter out inactive events
+    if (ev.isActive === false) return false;
+
     if (!ev.endDate) return true;
     const end = new Date(ev.endDate);
     end.setHours(0, 0, 0, 0);
@@ -244,9 +247,18 @@ const tasks = computed(() => {
 
     if (startIndex !== -1 && endIndex !== -1 && startIndex <= endIndex) {
       const theme = getAppTheme(ev.appSource);
+      
+      // Combine phase and program name
+      let taskName = '';
+      if (ev.phase && ev.programName) {
+        taskName = `${ev.phase} - ${ev.programName}`;
+      } else {
+        taskName = ev.phase || ev.programName || 'Timeline';
+      }
+
       list.push({
         id: `${ev.programId || 'ev'}-${idx}`,
-        name: ev.phase || ev.programName,
+        name: taskName,
         row: rIdx,
         startIndex,
         endIndex,
@@ -404,7 +416,7 @@ async function fetchTimelines() {
   loading.value = true;
   error.value = false;
   try {
-    const response = await api.get('/api/v1/dashboard/timelines');
+    const response = await api.get('/dashboard/timelines');
     const data = response.data?.data || [];
     events.value = data;
   } catch (err) {

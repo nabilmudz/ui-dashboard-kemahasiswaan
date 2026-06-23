@@ -131,7 +131,7 @@ async function loadPendingProposals() {
   loading.value = true;
   errorMsg.value = '';
   try {
-    const res = await api.get('/api/v1/dashboard/proposals/pending');
+    const res = await api.get('/dashboard/proposals/pending');
     pendingProposals.value = res.data?.data || [];
   } catch (err) {
     console.error('Error fetching proposals:', err);
