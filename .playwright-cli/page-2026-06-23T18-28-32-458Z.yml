@@ -1,0 +1,252 @@
+- generic [ref=e19]:
+  - complementary [ref=e20]:
+    - link "Logo Dashboard Kemahasiswaan" [ref=e22] [cursor=pointer]:
+      - /url: /
+      - img "Logo" [ref=e24]
+      - generic [ref=e25]:
+        - text: Dashboard
+        - text: Kemahasiswaan
+    - list [ref=e26]:
+      - listitem [ref=e27]:
+        - link " Home" [ref=e28] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e30]: 
+          - generic [ref=e31]: Home
+      - listitem [ref=e32]:
+        - link " Dashboard" [ref=e33] [cursor=pointer]:
+          - /url: /analytics
+          - generic [ref=e35]: 
+          - generic [ref=e36]: Dashboard
+      - listitem [ref=e37]:
+        - generic [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]:
+            - generic [ref=e41]: 
+            - generic [ref=e42]: Aplikasi Layanan
+          - generic [ref=e43]: 
+        - text:      
+      - listitem [ref=e44]:
+        - link " Profil SSO" [ref=e45] [cursor=pointer]:
+          - /url: /profile
+          - generic [ref=e47]: 
+          - generic [ref=e48]: Profil SSO
+  - generic [ref=e49]:
+    - navigation [ref=e50]:
+      - generic [ref=e51]:
+        - button "" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: 
+        - generic [ref=e56] [cursor=pointer]:
+          - generic [ref=e57]:
+            - generic [ref=e58]: Budi Mahasiswa
+            - generic [ref=e59]: MAHASISWA
+          - img "Avatar" [ref=e61]
+    - main [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e65]:
+          - heading "Selamat Datang di," [level=1] [ref=e66]
+          - paragraph [ref=e67]: Dashboard Kemahasiswaan Polban
+        - generic [ref=e68]:
+          - paragraph [ref=e69]: Akses Cepat Layanan Anda
+          - generic [ref=e70]:
+            - link " PKM  Program Kreativitas Mahasiswa" [ref=e71] [cursor=pointer]:
+              - /url: https://pkm.andiputraw.my.id/pkm
+              - generic [ref=e72]:
+                - generic [ref=e73]: 
+                - generic [ref=e74]:
+                  - paragraph [ref=e75]:
+                    - text: PKM
+                    - generic [ref=e76]: 
+                  - paragraph [ref=e77]: Program Kreativitas Mahasiswa
+            - link " PMW  Program Mahasiswa Wirausaha" [ref=e78] [cursor=pointer]:
+              - /url: https://pmw.andiputraw.my.id/pmw/
+              - generic [ref=e79]:
+                - generic [ref=e80]: 
+                - generic [ref=e81]:
+                  - paragraph [ref=e82]:
+                    - text: PMW
+                    - generic [ref=e83]: 
+                  - paragraph [ref=e84]: Program Mahasiswa Wirausaha
+            - link " Proposal  Pengajuan Proposal Beasiswa" [ref=e85] [cursor=pointer]:
+              - /url: https://proposal.andiputraw.my.id/
+              - generic [ref=e86]:
+                - generic [ref=e87]: 
+                - generic [ref=e88]:
+                  - paragraph [ref=e89]:
+                    - text: Proposal
+                    - generic [ref=e90]: 
+                  - paragraph [ref=e91]: Pengajuan Proposal Beasiswa
+            - link " Lapor Kompetisi & Prestasi  Lapor Kompetisi & Prestasi" [ref=e92] [cursor=pointer]:
+              - /url: https://kompetisi-prestasi.andiputraw.my.id/kompetisi
+              - generic [ref=e93]:
+                - generic [ref=e94]: 
+                - generic [ref=e95]:
+                  - paragraph [ref=e96]:
+                    - text: Lapor Kompetisi & Prestasi
+                    - generic [ref=e97]: 
+                  - paragraph [ref=e98]: Lapor Kompetisi & Prestasi
+            - link " Ka-Ormawa  Pemilihan Ketua Ormawa" [ref=e99] [cursor=pointer]:
+              - /url: https://ka-ormawa.andiputraw.my.id/
+              - generic [ref=e100]:
+                - generic [ref=e101]: 
+                - generic [ref=e102]:
+                  - paragraph [ref=e103]:
+                    - text: Ka-Ormawa
+                    - generic [ref=e104]: 
+                  - paragraph [ref=e105]: Pemilihan Ketua Ormawa
+            - link " Sarpras  Peminjaman Sarana & Prasarana" [ref=e106] [cursor=pointer]:
+              - /url: https://proposal.andiputraw.my.id/
+              - generic [ref=e107]:
+                - generic [ref=e108]: 
+                - generic [ref=e109]:
+                  - paragraph [ref=e110]:
+                    - text: Sarpras
+                    - generic [ref=e111]: 
+                  - paragraph [ref=e112]: Peminjaman Sarana & Prasarana
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - paragraph [ref=e115]: Peluang Aktif (Lomba & Beasiswa)
+            - generic [ref=e116]:
+              - generic [ref=e117]:
+                - generic [ref=e118]:
+                  - generic [ref=e119]: LOMBA
+                  - generic [ref=e120]: Lapor Kompetisi & Prestasi
+                - heading "Gemastik XIX 2026" [level=4] [ref=e121]
+                - paragraph [ref=e122]: Pagelaran Mahasiswa Nasional Bidang Teknologi Informasi dan Komunikasi.
+                - generic [ref=e123]:
+                  - generic [ref=e124]:
+                    - generic [ref=e125]: 
+                    - text: "Tutup: 15 Jul 2026"
+                  - link "Daftar " [ref=e126] [cursor=pointer]:
+                    - /url: https://prestasi.app/competitions/lomba-01
+                    - text: Daftar
+                    - generic [ref=e127]: 
+              - generic [ref=e128]:
+                - generic [ref=e129]:
+                  - generic [ref=e130]: LOMBA
+                  - generic [ref=e131]: Lapor Kompetisi & Prestasi
+                - heading "ONMIPA-PT 2026" [level=4] [ref=e132]
+                - paragraph [ref=e133]: Olimpiade Nasional Matematika dan Ilmu Pengetahuan Alam Perguruan Tinggi.
+                - generic [ref=e134]:
+                  - generic [ref=e135]:
+                    - generic [ref=e136]: 
+                    - text: "Tutup: 15 Agt 2026"
+                  - link "Daftar " [ref=e137] [cursor=pointer]:
+                    - /url: https://prestasi.app/competitions/lomba-03
+                    - text: Daftar
+                    - generic [ref=e138]: 
+              - generic [ref=e139]:
+                - generic [ref=e140]:
+                  - generic [ref=e141]: LOMBA
+                  - generic [ref=e142]: Lapor Kompetisi & Prestasi
+                - heading "Pilmapres 2026" [level=4] [ref=e143]
+                - paragraph [ref=e144]: Pemilihan Mahasiswa Berprestasi Tingkat Nasional.
+                - generic [ref=e145]:
+                  - generic [ref=e146]:
+                    - generic [ref=e147]: 
+                    - text: "Tutup: 30 Jun 2026"
+                  - link "Daftar " [ref=e148] [cursor=pointer]:
+                    - /url: https://prestasi.app/competitions/lomba-04
+                    - text: Daftar
+                    - generic [ref=e149]: 
+              - generic [ref=e150]:
+                - generic [ref=e151]:
+                  - generic [ref=e152]: LOMBA
+                  - generic [ref=e153]: Lapor Kompetisi & Prestasi
+                - heading "Hackathon Merdeka 2026" [level=4] [ref=e154]
+                - paragraph [ref=e155]: Kompetisi pembuatan aplikasi berbasis web/mobile.
+                - generic [ref=e156]:
+                  - generic [ref=e157]:
+                    - generic [ref=e158]: 
+                    - text: "Tutup: 10 Jul 2026"
+                  - link "Daftar " [ref=e159] [cursor=pointer]:
+                    - /url: https://prestasi.app/competitions/lomba-05
+                    - text: Daftar
+                    - generic [ref=e160]: 
+              - generic [ref=e161]:
+                - generic [ref=e162]:
+                  - generic [ref=e163]: LOMBA
+                  - generic [ref=e164]: Lapor Kompetisi & Prestasi
+                - heading "KRI (Kontes Robot Indonesia) 2026" [level=4] [ref=e165]
+                - paragraph [ref=e166]: Kompetisi robotika mahasiswa tahunan.
+                - generic [ref=e167]:
+                  - generic [ref=e168]:
+                    - generic [ref=e169]: 
+                    - text: "Tutup: 25 Jun 2026"
+                  - link "Daftar " [ref=e170] [cursor=pointer]:
+                    - /url: https://prestasi.app/competitions/lomba-07
+                    - text: Daftar
+                    - generic [ref=e171]: 
+              - generic [ref=e172]:
+                - generic [ref=e173]:
+                  - generic [ref=e174]: LOMBA
+                  - generic [ref=e175]: Lapor Kompetisi & Prestasi
+                - heading "National University Debating Championship 2026" [level=4] [ref=e176]
+                - paragraph [ref=e177]: Kompetisi debat bahasa Inggris antar perguruan tinggi.
+                - generic [ref=e178]:
+                  - generic [ref=e179]:
+                    - generic [ref=e180]: 
+                    - text: "Tutup: 5 Jul 2026"
+                  - link "Daftar " [ref=e181] [cursor=pointer]:
+                    - /url: https://prestasi.app/competitions/lomba-08
+                    - text: Daftar
+                    - generic [ref=e182]: 
+              - generic [ref=e183]:
+                - generic [ref=e184]:
+                  - generic [ref=e185]: BEASISWA
+                  - generic [ref=e186]: Proposal
+                - heading "Beasiswa Unggulan Kemdikbud 2026" [level=4] [ref=e187]
+                - paragraph [ref=e188]: Beasiswa Unggulan untuk mahasiswa berprestasi S1, S2, dan S3.
+                - generic [ref=e189]:
+                  - generic [ref=e190]:
+                    - generic [ref=e191]: 
+                    - text: "Tutup: 30 Agt 2026"
+                  - link "Daftar " [ref=e192] [cursor=pointer]:
+                    - /url: https://beasiswa.app/program/beasiswa-01
+                    - text: Daftar
+                    - generic [ref=e193]: 
+              - generic [ref=e194]:
+                - generic [ref=e195]:
+                  - generic [ref=e196]: BEASISWA
+                  - generic [ref=e197]: Proposal
+                - heading "Beasiswa Santri Berprestasi 2026" [level=4] [ref=e198]
+                - paragraph [ref=e199]: Beasiswa khusus untuk santri pondok pesantren berprestasi.
+                - generic [ref=e200]:
+                  - generic [ref=e201]:
+                    - generic [ref=e202]: 
+                    - text: "Tutup: 31 Jul 2026"
+                  - link "Daftar " [ref=e203] [cursor=pointer]:
+                    - /url: https://beasiswa.app/program/beasiswa-02
+                    - text: Daftar
+                    - generic [ref=e204]: 
+              - generic [ref=e205]:
+                - generic [ref=e206]:
+                  - generic [ref=e207]: BEASISWA
+                  - generic [ref=e208]: Proposal
+                - heading "Beasiswa PPA 2026" [level=4] [ref=e209]
+                - paragraph [ref=e210]: Beasiswa Peningkatan Prestasi Akademik.
+                - generic [ref=e211]:
+                  - generic [ref=e212]:
+                    - generic [ref=e213]: 
+                    - text: "Tutup: 30 Sep 2026"
+                  - link "Daftar " [ref=e214] [cursor=pointer]:
+                    - /url: https://beasiswa.app/program/beasiswa-04
+                    - text: Daftar
+                    - generic [ref=e215]: 
+              - generic [ref=e216]:
+                - generic [ref=e217]:
+                  - generic [ref=e218]: BEASISWA
+                  - generic [ref=e219]: Proposal
+                - heading "Beasiswa Tanoto Foundation 2026" [level=4] [ref=e220]
+                - paragraph [ref=e221]: Program pengembangan kepemimpinan dan beasiswa.
+                - generic [ref=e222]:
+                  - generic [ref=e223]:
+                    - generic [ref=e224]: 
+                    - text: "Tutup: 1 Sep 2026"
+                  - link "Daftar " [ref=e225] [cursor=pointer]:
+                    - /url: https://beasiswa.app/program/beasiswa-06
+                    - text: Daftar
+                    - generic [ref=e226]: 
+          - generic [ref=e227]:
+            - generic [ref=e229]:
+              - paragraph [ref=e230]: Kalender Agenda & Fase Kegiatan
+              - paragraph [ref=e231]: Jadwal fase aktif yang diintegrasikan dari PKM, PMW, Proposal, dan Ormawa
+            - paragraph [ref=e235]: Memuat timeline program...
