@@ -55,13 +55,25 @@
         <div class="flex-1 overflow-auto relative" ref="gridScrollRef">
 
           <!-- Timeline Header -->
-          <div class="flex min-w-max border-b border-gray-200 sticky top-0 z-30 bg-white" style="height: 50px;">
-            <div v-for="day in days" :key="day.isoStr"
-              class="w-[50px] shrink-0 border-r border-gray-150 flex flex-col items-center justify-center p-1 bg-gray-50/20"
-              :class="{ 'bg-brand-orange/10': isToday(day.isoStr) }"
-            >
-              <span class="font-bold text-gray-800 text-[11px]">{{ String(day.date).padStart(2, '0') }}</span>
-              <span class="text-[8px] text-gray-400 font-bold uppercase tracking-tight">{{ day.dayName.substring(0, 3) }}</span>
+          <div class="flex min-w-max border-b border-gray-200 sticky top-0 z-30 bg-white flex-col" style="height: 50px;">
+            <!-- Month Grouping Row -->
+            <div class="flex border-b border-gray-150 bg-gray-100/50 select-none" style="height: 18px;">
+              <div v-for="group in monthGroups" :key="group.monthName"
+                class="border-r border-gray-150 flex items-center justify-center font-bold text-[8px] uppercase tracking-wider text-gray-500"
+                :style="{ width: (group.colspan * 50) + 'px' }"
+              >
+                {{ group.monthName }}
+              </div>
+            </div>
+            <!-- Days Row -->
+            <div class="flex-1 flex" style="height: 32px;">
+              <div v-for="day in days" :key="day.isoStr"
+                class="w-[50px] shrink-0 border-r border-gray-150 flex flex-col items-center justify-center bg-gray-50/20"
+                :class="{ 'bg-brand-orange/10': isToday(day.isoStr) }"
+              >
+                <span class="font-bold text-gray-800 text-[10px] leading-tight">{{ String(day.date).padStart(2, '0') }}</span>
+                <span class="text-[7px] text-gray-400 font-bold uppercase tracking-tight leading-none">{{ day.dayName.substring(0, 3) }}</span>
+              </div>
             </div>
           </div>
 
@@ -148,6 +160,26 @@ const days = computed(() => {
     });
   }
   return list;
+});
+
+// Month grouping headers for colspan-like layouts
+const monthGroups = computed(() => {
+  const groups = [];
+  days.value.forEach(day => {
+    const d = new Date(day.isoStr);
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGT', 'SEP', 'OKT', 'NOV', 'DES'];
+    const monthName = `${months[d.getMonth()]} ${d.getFullYear()}`;
+    
+    if (groups.length === 0 || groups[groups.length - 1].monthName !== monthName) {
+      groups.push({
+        monthName,
+        colspan: 1
+      });
+    } else {
+      groups[groups.length - 1].colspan++;
+    }
+  });
+  return groups;
 });
 
 const rangeLabel = computed(() => {

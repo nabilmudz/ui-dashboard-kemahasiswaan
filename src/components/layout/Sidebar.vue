@@ -57,7 +57,7 @@
       <SidebarItem 
         to="/profile" 
         icon="fa-regular fa-user" 
-        label="Profil SSO" 
+        label="Profil" 
         :is-collapsed="isCollapsed" 
       />
     </ul>

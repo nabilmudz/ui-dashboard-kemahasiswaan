@@ -117,7 +117,7 @@ async function loadRecaps() {
   loading.value = true;
   errorMsg.value = '';
   try {
-    const res = await api.get('api/v1/dashboard/recap/ormawa');
+    const res = await api.get('/dashboard/recap/ormawa');
     ormawaRecaps.value = res.data?.data || [];
   } catch (err) {
     console.error('Error loading recap list:', err);

@@ -1,7 +1,7 @@
 <template>
   <div class="p-6 sm:p-8">
     <div class="mb-6">
-      <h2 class="text-xl font-bold text-gray-900 leading-tight">SSO Profil Sesi</h2>
+      <h2 class="text-xl font-bold text-gray-900 leading-tight">Profil</h2>
       <p class="text-xs text-gray-400 font-medium mt-0.5">Detail informasi login terpadu Anda</p>
     </div>
 
