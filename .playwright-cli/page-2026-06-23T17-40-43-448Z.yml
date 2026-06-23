@@ -1,0 +1,97 @@
+- generic [ref=e19]:
+  - complementary [ref=e20]:
+    - link "Logo Dashboard Kemahasiswaan" [ref=e22] [cursor=pointer]:
+      - /url: /
+      - img "Logo" [ref=e24]
+      - generic [ref=e25]:
+        - text: Dashboard
+        - text: Kemahasiswaan
+    - list [ref=e26]:
+      - listitem [ref=e27]:
+        - link " Home" [ref=e28] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e30]: 
+          - generic [ref=e31]: Home
+      - listitem [ref=e32]:
+        - generic [ref=e33] [cursor=pointer]:
+          - generic [ref=e34]:
+            - generic [ref=e36]: 
+            - generic [ref=e37]: Dashboard
+          - generic [ref=e38]: 
+        - list [ref=e39]:
+          - listitem [ref=e40]:
+            - link " Ringkasan Statistik" [ref=e41] [cursor=pointer]:
+              - /url: /analytics/overview
+              - generic [ref=e42]:
+                - generic [ref=e43]: 
+                - generic [ref=e44]: Ringkasan Statistik
+          - listitem [ref=e45]:
+            - link " Antrean Pending" [ref=e46] [cursor=pointer]:
+              - /url: /analytics/proposals
+              - generic [ref=e47]:
+                - generic [ref=e48]: 
+                - generic [ref=e49]: Antrean Pending
+          - listitem [ref=e50]:
+            - link " PKM" [ref=e51] [cursor=pointer]:
+              - /url: /analytics/pkm
+              - generic [ref=e52]:
+                - generic [ref=e53]: 
+                - generic [ref=e54]: PKM
+          - listitem [ref=e55]:
+            - link " PMW" [ref=e56] [cursor=pointer]:
+              - /url: /analytics/pmw
+              - generic [ref=e57]:
+                - generic [ref=e58]: 
+                - generic [ref=e59]: PMW
+          - listitem [ref=e60]:
+            - link " Proposal" [ref=e61] [cursor=pointer]:
+              - /url: /analytics/beasiswa
+              - generic [ref=e62]:
+                - generic [ref=e63]: 
+                - generic [ref=e64]: Proposal
+          - listitem [ref=e65]:
+            - link " Kompetisi & Prestasi" [ref=e66] [cursor=pointer]:
+              - /url: /analytics/prestasi
+              - generic [ref=e67]:
+                - generic [ref=e68]: 
+                - generic [ref=e69]: Kompetisi & Prestasi
+          - listitem [ref=e70]:
+            - link " Rekap Ormawa" [ref=e71] [cursor=pointer]:
+              - /url: /analytics/recap
+              - generic [ref=e72]:
+                - generic [ref=e73]: 
+                - generic [ref=e74]: Rekap Ormawa
+          - listitem [ref=e75]:
+            - link " Okupansi Venue" [ref=e76] [cursor=pointer]:
+              - /url: /analytics/venues
+              - generic [ref=e77]:
+                - generic [ref=e78]: 
+                - generic [ref=e79]: Okupansi Venue
+      - listitem [ref=e80]:
+        - generic [ref=e81] [cursor=pointer]:
+          - generic [ref=e82]:
+            - generic [ref=e84]: 
+            - generic [ref=e85]: Aplikasi Layanan
+          - generic [ref=e86]: 
+        - text:      
+      - listitem [ref=e87]:
+        - link " Profil SSO" [ref=e88] [cursor=pointer]:
+          - /url: /profile
+          - generic [ref=e90]: 
+          - generic [ref=e91]: Profil SSO
+  - generic [ref=e92]:
+    - navigation [ref=e93]:
+      - generic [ref=e94]:
+        - button "" [ref=e95] [cursor=pointer]:
+          - generic [ref=e96]: 
+        - generic [ref=e99] [cursor=pointer]:
+          - generic [ref=e100]:
+            - generic [ref=e101]: Siti Staff
+            - generic [ref=e102]: STAFF
+          - img "Avatar" [ref=e104]
+    - main [ref=e105]:
+      - generic [ref=e106]:
+        - generic [ref=e108]:
+          - heading "Dashboard" [level=1] [ref=e109]
+          - paragraph [ref=e110]: Dasbor terpadu, STAFF
+        - paragraph [ref=e115]: Memuat data dasbor...

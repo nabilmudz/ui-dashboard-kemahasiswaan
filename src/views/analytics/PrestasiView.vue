@@ -38,14 +38,14 @@
           </div>
           <div class="bg-gray-50 p-5 rounded-2xl flex flex-col justify-between border border-gray-100/70">
             <span class="text-[9px] uppercase font-bold text-gray-400">Conversion Rate</span>
-            <span class="text-2xl font-bold text-brand-orange mt-2">{{ prestasiData.successRatePercent }}%</span>
+            <span class="text-2xl font-bold text-brand-orange mt-2">{{ prestasiData.successRatePercent || 0 }}%</span>
           </div>
         </div>
 
         <div class="space-y-3">
           <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wide">Sebaran Tingkat Prestasi per Skala Lomba (IKU)</h4>
           <div v-if="prestasiErrors.iku" class="text-xs text-red-500 font-semibold mb-2">⚠️ {{ prestasiErrors.iku }}</div>
-          <div v-else-if="!prestasiIkuTrend.data || prestasiIkuTrend.data.length === 0" class="text-xs text-gray-400">Tidak ada data tren IKU.</div>
+          <div v-else-if="!prestasiIkuTrend || prestasiIkuTrend.length === 0" class="text-xs text-gray-400">Tidak ada data tren IKU.</div>
           <div v-else class="overflow-x-auto rounded-xl border border-gray-100/70">
             <table class="w-full text-left border-collapse text-xs">
               <thead>
@@ -59,12 +59,12 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
-                <tr v-for="row in prestasiIkuTrend.data" :key="row.tahun" class="hover:bg-gray-50/50">
+                <tr v-for="row in prestasiIkuTrend" :key="row.tahun" class="hover:bg-gray-50/50">
                   <td class="py-3 px-4 font-semibold text-gray-900 tracking-wide">{{ row.tahun }}</td>
-                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.INTERNASIONAL || 0 }} Poin</td>
-                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.NASIONAL || 0 }} Poin</td>
-                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.REGIONAL || 0 }} Poin</td>
-                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.LOKAL || 0 }} Poin</td>
+                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.Internasional || 0 }} Poin</td>
+                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.Nasional || 0 }} Poin</td>
+                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.Regional || 0 }} Poin</td>
+                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.Lokal || 0 }} Poin</td>
                   <td class="py-3 px-4 text-center font-bold text-brand-orange">{{ row.totalIkuPoin }} Poin IKU</td>
                 </tr>
               </tbody>
@@ -109,10 +109,10 @@
             <div class="p-3 bg-red-50/50 rounded-xl">
               <div class="flex justify-between text-xs font-bold text-red-800 mb-1">
                 <span>Persentase Gagal LPJ / Gagal Tanding:</span>
-                <span>{{ prestasiGagalTanding?.rasioGagalTandingPercent ?? 0 }}%</span>
+                <span>{{ prestasiGagalTandingRate }}%</span>
               </div>
               <div class="w-full bg-red-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-red-500 h-full" :style="{ width: (prestasiGagalTanding?.rasioGagalTandingPercent ?? 0) + '%' }"></div>
+                <div class="bg-red-500 h-full" :style="{ width: prestasiGagalTandingRate + '%' }"></div>
               </div>
             </div>
 
@@ -158,9 +158,9 @@
           <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Tingkat Berkas Cacat (Revision Rate)</span>
           <div v-if="prestasiErrors.leadTime" class="text-xs text-red-500 font-semibold mt-2">⚠️ {{ prestasiErrors.leadTime }}</div>
           <div v-else class="mt-4">
-            <span class="text-4xl font-bold text-brand-orange">{{ prestasiLeadTime?.revisionRatePercent ?? 0 }}%</span>
+            <span class="text-4xl font-bold text-brand-orange">{{ prestasiRevisionRate }}%</span>
             <div class="w-full bg-gray-100 h-1.5 rounded-full mt-3 overflow-hidden">
-              <div class="bg-brand-orange h-full" :style="{ width: (prestasiLeadTime?.revisionRatePercent ?? 0) + '%' }"></div>
+              <div class="bg-brand-orange h-full" :style="{ width: prestasiRevisionRate + '%' }"></div>
             </div>
             <p class="text-[10px] text-gray-400 font-semibold mt-2">Rasio berkas dikembalikan ke mahasiswa untuk direvisi</p>
           </div>
@@ -186,6 +186,22 @@ const prestasiGagalTanding = ref(null);
 const prestasiLeadTime = ref(null);
 const prestasiErrors = ref({});
 
+const prestasiSuccessRate = computed(() => {
+	if (!prestasiData.value?.totalPengajuan) return 0;
+	return Math.round((prestasiData.value.totalJadiPrestasi / prestasiData.value.totalPengajuan) * 100);
+});
+
+const prestasiRevisionRate = computed(() => {
+	if (!prestasiLeadTime.value?.totalPengajuan) return 0;
+	return Math.round((prestasiLeadTime.value.totalRevisi / prestasiLeadTime.value.totalPengajuan) * 100);
+});
+
+const prestasiGagalTandingRate = computed(() => {
+	const d = prestasiGagalTanding.value;
+	if (!d?.totalDanaCair) return 0;
+	return Math.round((d.totalTanpaLpj / d.totalDanaCair) * 100);
+});
+
 function formatDate(isoStr) {
   if (!isoStr) return '-';
   try {
@@ -205,22 +221,24 @@ async function loadPrestasiData() {
 
   const promises = [];
 
-  // Default success-rate is fetched for all roles in Prestasi tab
-  promises.push(
-    api.get('/dashboard/analytics/prestasi/success-rate')
-      .then(res => {
-        prestasiData.value = res.data || null;
-      })
-      .catch(err => {
-        prestasiErrors.value.rate = err.response?.data?.message || err.message || 'Gagal memuat success rate prestasi';
-      })
-  );
+  // Default success-rate is fetched for WD3 in Prestasi tab
+  if (authStore.user?.role === 'WD3') {
+    promises.push(
+      api.get('/api/v1/dashboard/analytics/prestasi/success-rate')
+        .then(res => {
+          prestasiData.value = res.data?.data || res.data || null;
+        })
+        .catch(err => {
+          prestasiErrors.value.rate = err.response?.data?.message || err.message || 'Gagal memuat success rate prestasi';
+        })
+    );
+  }
 
   if (authStore.user?.role === 'WD3') {
     promises.push(
-      api.get('/dashboard/analytics/prestasi/tren-iku')
+      api.get('/api/v1/dashboard/analytics/prestasi/tren-iku')
         .then(res => {
-          prestasiIkuTrend.value = res.data?.data || res.data || [];
+          prestasiIkuTrend.value = res.data?.data || res.data || {};
         })
         .catch(err => {
           prestasiErrors.value.iku = err.response?.data?.message || err.message || 'Gagal memuat tren IKU prestasi';
@@ -228,18 +246,18 @@ async function loadPrestasiData() {
     );
   } else if (authStore.user?.role === 'KLI') {
     promises.push(
-      api.get('/dashboard/analytics/prestasi/sebaran-kategori')
+      api.get('/api/v1/dashboard/analytics/prestasi/sebaran-kategori')
         .then(res => {
-          prestasiInterestDist.value = res.data?.data || res.data || [];
+          prestasiInterestDist.value = res.data?.data || res.data || {};
         })
         .catch(err => {
           prestasiErrors.value.kategori = err.response?.data?.message || err.message || 'Gagal memuat sebaran minat prestasi';
         })
     );
     promises.push(
-      api.get('/dashboard/analytics/prestasi/rasio-gagal-tanding')
+      api.get('/api/v1/dashboard/analytics/prestasi/rasio-gagal-tanding')
         .then(res => {
-          prestasiGagalTanding.value = res.data || null;
+          prestasiGagalTanding.value = res.data?.data || res.data || null;
         })
         .catch(err => {
           prestasiErrors.value.lpj = err.response?.data?.message || err.message || 'Gagal memuat audit LPJ';
@@ -247,9 +265,9 @@ async function loadPrestasiData() {
     );
   } else if (authStore.user?.role === 'STAFF') {
     promises.push(
-      api.get('/dashboard/analytics/prestasi/lead-time-revision')
+      api.get('/api/v1/dashboard/analytics/prestasi/lead-time-revision')
         .then(res => {
-          prestasiLeadTime.value = res.data || null;
+          prestasiLeadTime.value = res.data?.data || res.data || null;
         })
         .catch(err => {
           prestasiErrors.value.leadTime = err.response?.data?.message || err.message || 'Gagal memuat pemrosesan berkas';

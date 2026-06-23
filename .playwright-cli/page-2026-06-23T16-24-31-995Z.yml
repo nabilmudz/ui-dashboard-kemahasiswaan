@@ -1,0 +1,116 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - link "Logo Dashboard Kemahasiswaan" [ref=e6] [cursor=pointer]:
+      - /url: /
+      - img "Logo" [ref=e8]
+      - generic [ref=e9]:
+        - text: Dashboard
+        - text: Kemahasiswaan
+    - list [ref=e10]:
+      - listitem [ref=e11]:
+        - link " Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e14]: 
+          - generic [ref=e15]: Home
+      - listitem [ref=e16]:
+        - generic [ref=e17] [cursor=pointer]:
+          - generic [ref=e18]:
+            - generic [ref=e20]: 
+            - generic [ref=e21]: Dashboard
+          - generic [ref=e22]: 
+        - text:        
+      - listitem [ref=e23]:
+        - generic [ref=e24] [cursor=pointer]:
+          - generic [ref=e25]:
+            - generic [ref=e27]: 
+            - generic [ref=e28]: Aplikasi Layanan
+          - generic [ref=e29]: 
+        - text:      
+      - listitem [ref=e30]:
+        - link " Profil SSO" [ref=e31] [cursor=pointer]:
+          - /url: /profile
+          - generic [ref=e33]: 
+          - generic [ref=e34]: Profil SSO
+  - generic [ref=e35]:
+    - navigation [ref=e36]:
+      - generic [ref=e37]:
+        - button "" [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]: 
+        - generic [ref=e42] [cursor=pointer]:
+          - generic [ref=e43]:
+            - generic [ref=e44]: Siti Staff
+            - generic [ref=e45]: STAFF
+          - img "Avatar" [ref=e47]
+    - main [ref=e48]:
+      - generic [ref=e49]:
+        - generic [ref=e51]:
+          - heading "Selamat Datang di," [level=1] [ref=e52]
+          - paragraph [ref=e53]: Dashboard Kemahasiswaan Polban
+        - generic [ref=e54]:
+          - paragraph [ref=e55]: Akses Cepat Layanan Anda
+          - generic [ref=e56]:
+            - link " PKM  Program Kreativitas Mahasiswa" [ref=e57] [cursor=pointer]:
+              - /url: https://pkm.andiputraw.my.id/pkm
+              - generic [ref=e58]:
+                - generic [ref=e59]: 
+                - generic [ref=e60]:
+                  - paragraph [ref=e61]:
+                    - text: PKM
+                    - generic [ref=e62]: 
+                  - paragraph [ref=e63]: Program Kreativitas Mahasiswa
+            - link " PMW  Program Mahasiswa Wirausaha" [ref=e64] [cursor=pointer]:
+              - /url: https://pmw.andiputraw.my.id/pmw/
+              - generic [ref=e65]:
+                - generic [ref=e66]: 
+                - generic [ref=e67]:
+                  - paragraph [ref=e68]:
+                    - text: PMW
+                    - generic [ref=e69]: 
+                  - paragraph [ref=e70]: Program Mahasiswa Wirausaha
+            - link " Proposal  Pengajuan Proposal Beasiswa" [ref=e71] [cursor=pointer]:
+              - /url: https://proposal.andiputraw.my.id/
+              - generic [ref=e72]:
+                - generic [ref=e73]: 
+                - generic [ref=e74]:
+                  - paragraph [ref=e75]:
+                    - text: Proposal
+                    - generic [ref=e76]: 
+                  - paragraph [ref=e77]: Pengajuan Proposal Beasiswa
+            - link " Lapor Kompetisi & Prestasi  Lapor Kompetisi & Prestasi" [ref=e78] [cursor=pointer]:
+              - /url: https://kompetisi-prestasi.andiputraw.my.id/kompetisi
+              - generic [ref=e79]:
+                - generic [ref=e80]: 
+                - generic [ref=e81]:
+                  - paragraph [ref=e82]:
+                    - text: Lapor Kompetisi & Prestasi
+                    - generic [ref=e83]: 
+                  - paragraph [ref=e84]: Lapor Kompetisi & Prestasi
+            - link " Ka-Ormawa  Pemilihan Ketua Ormawa" [ref=e85] [cursor=pointer]:
+              - /url: https://ka-ormawa.andiputraw.my.id/
+              - generic [ref=e86]:
+                - generic [ref=e87]: 
+                - generic [ref=e88]:
+                  - paragraph [ref=e89]:
+                    - text: Ka-Ormawa
+                    - generic [ref=e90]: 
+                  - paragraph [ref=e91]: Pemilihan Ketua Ormawa
+            - link " Sarpras  Peminjaman Sarana & Prasarana" [ref=e92] [cursor=pointer]:
+              - /url: https://proposal.andiputraw.my.id/
+              - generic [ref=e93]:
+                - generic [ref=e94]: 
+                - generic [ref=e95]:
+                  - paragraph [ref=e96]:
+                    - text: Sarpras
+                    - generic [ref=e97]: 
+                  - paragraph [ref=e98]: Peminjaman Sarana & Prasarana
+        - generic [ref=e99]:
+          - generic [ref=e100]:
+            - paragraph [ref=e101]: Notifikasi Aktivitas
+            - generic [ref=e102]:
+              - generic [ref=e103]: 
+              - generic [ref=e104]: Belum ada notifikasi baru dari sub-aplikasi.
+          - generic [ref=e105]:
+            - generic [ref=e107]:
+              - paragraph [ref=e108]: Kalender Agenda & Fase Kegiatan
+              - paragraph [ref=e109]: Jadwal fase aktif yang diintegrasikan dari PKM, PMW, Proposal, dan Ormawa
+            - paragraph [ref=e113]: Memuat timeline program...

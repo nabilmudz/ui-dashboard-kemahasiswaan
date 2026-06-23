@@ -7,94 +7,114 @@
       <p class="text-xs text-gray-400 font-semibold">Memuat timeline program...</p>
     </div>
 
-    <div v-else-if="error || events.length === 0" class="p-12 text-center text-gray-400 font-semibold">
+    <div v-else-if="error || activeEvents.length === 0" class="p-12 text-center text-gray-400 font-semibold">
       <i class="fa-regular fa-calendar-xmark text-xl text-gray-300 mb-2 block"></i>
       Tidak ada data timeline program aktif untuk ditampilkan saat ini.
     </div>
 
-    <!-- Timeline Grid -->
-    <div v-else class="flex">
-      <!-- Left Resource Sidebar Column (Dynamic rows based on programs) -->
-      <div class="w-[140px] shrink-0 border-r border-gray-200 bg-gray-50/50 flex flex-col">
-        <!-- Corner spacer header -->
-        <div class="h-[60px] border-b border-gray-200 flex items-center px-3 font-bold text-gray-500 uppercase tracking-wide">
-          Program
+    <template v-else>
+      <!-- Navigation Bar -->
+      <div class="flex items-center justify-between px-3 py-2 border-b border-gray-200 bg-gray-50/50">
+        <div class="flex items-center gap-2">
+          <button @click="prevWeek" class="p-1 rounded hover:bg-gray-200 transition-colors" title="Minggu sebelumnya">
+            <i class="fa-solid fa-chevron-left text-[10px] text-gray-600"></i>
+          </button>
+          <span class="text-[10px] font-bold text-gray-700 uppercase tracking-wide">
+            {{ rangeLabel }}
+          </span>
+          <button @click="nextWeek" class="p-1 rounded hover:bg-gray-200 transition-colors" title="Minggu berikutnya">
+            <i class="fa-solid fa-chevron-right text-[10px] text-gray-600"></i>
+          </button>
         </div>
-        <!-- Resource rows -->
-        <div class="flex-1 flex flex-col">
-          <div v-for="(row, idx) in rows" :key="idx"
-            class="h-12 border-b border-gray-100 flex items-center px-3 font-semibold text-gray-700 hover:bg-gray-100/30 truncate"
-            :title="row"
-          >
-            <i class="fa-solid fa-angle-right text-[9px] text-brand-orange mr-1.5 shrink-0"></i>
-            {{ row }}
-          </div>
-        </div>
+        <button @click="goToToday" class="text-[9px] font-bold text-brand-orange hover:underline px-2 py-0.5 rounded bg-orange-50 border border-orange-200">
+          Hari Ini
+        </button>
       </div>
 
-      <!-- Right Scrollable Timeline Grid -->
-      <div class="flex-1 overflow-x-auto relative no-scrollbar" ref="gridScrollRef">
-
-        <!-- Timeline Header -->
-        <div class="flex min-w-max border-b border-gray-200" style="height: 60px;">
-          <div v-for="day in days" :key="day.isoStr"
-            class="w-[60px] shrink-0 border-r border-gray-150 flex flex-col items-center justify-center p-1 bg-gray-50/20"
-            :class="{ 'bg-brand-orange/5': isToday(day.isoStr) }"
-          >
-            <span class="font-bold text-gray-800 text-[13px]">{{ String(day.date).padStart(2, '0') }}</span>
-            <span class="text-[9px] text-gray-400 font-bold uppercase tracking-tight">{{ day.dayName.substring(0, 3) }}</span>
+      <!-- Timeline Grid -->
+      <div class="flex" style="max-height: 320px;">
+        <!-- Left Resource Sidebar Column -->
+        <div class="w-[130px] shrink-0 border-r border-gray-200 bg-gray-50/50 flex flex-col overflow-y-auto no-scrollbar">
+          <!-- Corner spacer header -->
+          <div class="h-[50px] border-b border-gray-200 flex items-center px-3 font-bold text-gray-500 uppercase tracking-wide text-[10px]">
+            Program
           </div>
-        </div>
-
-        <!-- Grid Body Content -->
-        <div class="relative min-w-max flex-1" :style="{ height: (rows.length * 48) + 'px' }">
-
-          <!-- Column grid lines background -->
-          <div class="absolute inset-0 flex pointer-events-none z-0">
-            <div v-for="day in days" :key="'line-' + day.isoStr" class="w-[60px] shrink-0 border-r border-gray-100 h-full">
-            </div>
-          </div>
-
-          <!-- Row grid lines background -->
-          <div class="absolute inset-0 flex flex-col pointer-events-none z-0">
-            <div v-for="i in rows.length" :key="'row-line-' + i" class="h-12 border-b border-gray-100 w-full"></div>
-          </div>
-
-          <!-- SVG Dependency Connection Lines Layer -->
-          <svg class="absolute inset-0 w-full h-full pointer-events-none z-10">
-            <defs>
-              <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
-                orient="auto-start-reverse">
-                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#cbd5e1" />
-              </marker>
-            </defs>
-            <path v-for="(path, idx) in connectorPaths" :key="idx" :d="path" fill="none" stroke="#cbd5e1"
-              stroke-width="1.5" marker-end="url(#arrow)" />
-          </svg>
-
-          <!-- Interactive Task Bars Layer -->
-          <div class="absolute inset-0 z-20 pointer-events-none">
-            <div v-for="task in tasks" :key="task.id"
-              class="absolute h-[32px] rounded-[16px] border flex items-center px-3 shadow-sm cursor-pointer select-none text-white pointer-events-auto transition-transform hover:scale-[1.02]"
-              :class="task.themeClass" :style="getTaskStyle(task)"
-              :title="`${task.name} (${formatDate(task.startDateStr)} - ${formatDate(task.endDateStr)})`"
-              @click="openLink(task.deepLinkUrl)"
+          <!-- Resource rows -->
+          <div class="flex-1 flex flex-col">
+            <div v-for="(row, idx) in rows" :key="idx"
+              class="h-10 border-b border-gray-100 flex items-center px-3 font-semibold text-gray-700 hover:bg-gray-100/30 truncate text-[11px]"
+              :title="row"
             >
-              <!-- Circle Badge -->
-              <div
-                class="w-5 h-5 rounded-full bg-white flex items-center justify-center font-bold text-[10px] mr-1.5 shrink-0"
-                :class="task.textTheme">
-                {{ task.badge }}
-              </div>
-              <!-- Label -->
-              <span class="font-bold truncate text-[10px] uppercase tracking-wider">{{ task.name }}</span>
+              <i class="fa-solid fa-angle-right text-[9px] text-brand-orange mr-1.5 shrink-0"></i>
+              {{ row }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Scrollable Timeline Grid -->
+        <div class="flex-1 overflow-auto relative" ref="gridScrollRef">
+
+          <!-- Timeline Header -->
+          <div class="flex min-w-max border-b border-gray-200 sticky top-0 z-30 bg-white" style="height: 50px;">
+            <div v-for="day in days" :key="day.isoStr"
+              class="w-[50px] shrink-0 border-r border-gray-150 flex flex-col items-center justify-center p-1 bg-gray-50/20"
+              :class="{ 'bg-brand-orange/10': isToday(day.isoStr) }"
+            >
+              <span class="font-bold text-gray-800 text-[11px]">{{ String(day.date).padStart(2, '0') }}</span>
+              <span class="text-[8px] text-gray-400 font-bold uppercase tracking-tight">{{ day.dayName.substring(0, 3) }}</span>
             </div>
           </div>
 
-        </div>
+          <!-- Grid Body Content -->
+          <div class="relative min-w-max" :style="{ height: gridHeight + 'px' }">
 
+            <!-- Column grid lines background -->
+            <div class="absolute inset-0 flex pointer-events-none z-0">
+              <div v-for="day in days" :key="'line-' + day.isoStr" class="w-[50px] shrink-0 border-r border-gray-100 h-full">
+              </div>
+            </div>
+
+            <!-- Row grid lines background -->
+            <div class="absolute inset-0 flex flex-col pointer-events-none z-0">
+              <div v-for="i in rows.length" :key="'row-line-' + i" class="h-12 border-b border-gray-100 w-full"></div>
+            </div>
+
+            <!-- SVG Dependency Connection Lines Layer -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none z-10">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#cbd5e1" />
+                </marker>
+              </defs>
+              <path v-for="(path, idx) in connectorPaths" :key="idx" :d="path" fill="none" stroke="#cbd5e1"
+                stroke-width="1.5" marker-end="url(#arrow)" />
+            </svg>
+
+            <!-- Interactive Task Bars Layer -->
+            <div class="absolute inset-0 z-20 pointer-events-none">
+              <div v-for="task in tasks" :key="task.id"
+                class="absolute h-[24px] rounded-[12px] border flex items-center px-2 shadow-sm cursor-pointer select-none text-white pointer-events-auto transition-transform hover:scale-[1.02]"
+                :class="task.themeClass" :style="getTaskStyle(task)"
+                :title="`${task.name} (${formatDate(task.startDateStr)} - ${formatDate(task.endDateStr)})`"
+                @click="openLink(task.deepLinkUrl)"
+              >
+                <!-- Circle Badge -->
+                <div
+                  class="w-3.5 h-3.5 rounded-full bg-white flex items-center justify-center font-bold text-[8px] mr-1 shrink-0"
+                  :class="task.textTheme">
+                  {{ task.badge }}
+                </div>
+                <!-- Label -->
+                <span class="font-bold truncate text-[8px] uppercase tracking-wider">{{ task.name }}</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -107,12 +127,13 @@ const loading = ref(true);
 const error = ref(false);
 
 const calendarStartDate = ref(new Date());
+const WINDOW_DAYS = 14;
 
-// Generate 30 days window from start date
+// Generate 14 days window from start date
 const days = computed(() => {
   const list = [];
   const base = new Date(calendarStartDate.value);
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < WINDOW_DAYS; i++) {
     const d = new Date(base);
     d.setDate(base.getDate() + i);
     const year = d.getFullYear();
@@ -129,21 +150,63 @@ const days = computed(() => {
   return list;
 });
 
+const rangeLabel = computed(() => {
+  if (days.value.length === 0) return '';
+  const first = days.value[0];
+  const last = days.value[days.value.length - 1];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+  const f = new Date(first.isoStr);
+  const l = new Date(last.isoStr);
+  if (f.getMonth() === l.getMonth()) {
+    return `${f.getDate()} - ${l.getDate()} ${months[f.getMonth()]} ${f.getFullYear()}`;
+  }
+  return `${f.getDate()} ${months[f.getMonth()]} - ${l.getDate()} ${months[l.getMonth()]} ${l.getFullYear()}`;
+});
+
+function prevWeek() {
+  const d = new Date(calendarStartDate.value);
+  d.setDate(d.getDate() - WINDOW_DAYS);
+  calendarStartDate.value = d;
+}
+
+function nextWeek() {
+  const d = new Date(calendarStartDate.value);
+  d.setDate(d.getDate() + WINDOW_DAYS);
+  calendarStartDate.value = d;
+}
+
+function goToToday() {
+  calendarStartDate.value = new Date();
+}
+
+// Filter out past events (ended before today)
+const activeEvents = computed(() => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return events.value.filter(ev => {
+    if (!ev.endDate) return true;
+    const end = new Date(ev.endDate);
+    end.setHours(0, 0, 0, 0);
+    return end >= today;
+  });
+});
+
 // Resource rows (unique programs list)
 const rows = computed(() => {
   const unique = new Set();
-  events.value.forEach(ev => {
+  activeEvents.value.forEach(ev => {
     if (ev.programName) {
       unique.add(ev.programName);
     }
   });
+
   return Array.from(unique);
 });
 
 // Dynamic tasks derived from API
 const tasks = computed(() => {
   const list = [];
-  events.value.forEach((ev, idx) => {
+  activeEvents.value.forEach((ev, idx) => {
     const rIdx = rows.value.indexOf(ev.programName);
     if (rIdx === -1) return;
 
@@ -197,6 +260,26 @@ const tasks = computed(() => {
       });
     }
   });
+
+  // Assign lanes per row to prevent overlapping
+  const rowGroups = {};
+  list.forEach(t => {
+    if (!rowGroups[t.row]) rowGroups[t.row] = [];
+    rowGroups[t.row].push(t);
+  });
+  Object.values(rowGroups).forEach(group => {
+    group.sort((a, b) => a.startIndex - b.startIndex);
+    const lanes = [];
+    group.forEach(task => {
+      let lane = 0;
+      while (lanes[lane] !== undefined && lanes[lane] > task.startIndex) {
+        lane++;
+      }
+      lanes[lane] = task.endIndex;
+      task.lane = lane;
+    });
+  });
+
   return list;
 });
 
@@ -224,13 +307,27 @@ const connections = computed(() => {
   return list;
 });
 
-const colWidth = 60;
+const colWidth = 50;
 const rowHeight = 48;
+
+const gridHeight = computed(() => {
+  const lanePerRow = {};
+  tasks.value.forEach(t => {
+    const l = t.lane || 0;
+    lanePerRow[t.row] = Math.max(lanePerRow[t.row] || 0, l + 1);
+  });
+  let total = 0;
+  for (let i = 0; i < rows.value.length; i++) {
+    total += rowHeight * (lanePerRow[i] || 1);
+  }
+  return total;
+});
 
 function getTaskStyle(task) {
   const left = task.startIndex * colWidth + 5;
   const width = (task.endIndex - task.startIndex + 1) * colWidth - 10;
-  const top = task.row * rowHeight + 8; // vertically centered in 48px row
+  const laneOffset = (task.lane || 0) * 22;
+  const top = task.row * rowHeight + 4 + laneOffset;
 
   return {
     left: `${left}px`,
@@ -307,21 +404,9 @@ async function fetchTimelines() {
   loading.value = true;
   error.value = false;
   try {
-    const response = await api.get('/dashboard/timelines');
+    const response = await api.get('/api/v1/dashboard/timelines');
     const data = response.data?.data || [];
     events.value = data;
-
-    if (data.length > 0) {
-      // Set calendar start date to the earliest event date
-      let minDate = new Date();
-      data.forEach(ev => {
-        const d = new Date(ev.startDate);
-        if (!isNaN(d.getTime()) && d.getTime() < minDate.getTime()) {
-          minDate = d;
-        }
-      });
-      calendarStartDate.value = minDate;
-    }
   } catch (err) {
     console.error('Failed to fetch timelines:', err);
     error.value = true;

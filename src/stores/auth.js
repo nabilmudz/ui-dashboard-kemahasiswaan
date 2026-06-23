@@ -136,7 +136,7 @@ export const useAuthStore = defineStore('auth', () => {
   // Fetch updated user and module accesses
   async function fetchCurrentUser() {
     try {
-      const response = await api.get('/dashboard/me');
+      const response = await api.get('/api/v1/dashboard/me');
       const data = response.data;
       
       const profile = {

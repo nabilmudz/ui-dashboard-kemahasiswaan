@@ -1,0 +1,240 @@
+- generic [ref=e19]:
+  - complementary [ref=e20]:
+    - link "Logo Dashboard Kemahasiswaan" [ref=e22] [cursor=pointer]:
+      - /url: /
+      - img "Logo" [ref=e24]
+      - generic [ref=e25]:
+        - text: Dashboard
+        - text: Kemahasiswaan
+    - list [ref=e26]:
+      - listitem [ref=e27]:
+        - link " Home" [ref=e28] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e30]: 
+          - generic [ref=e31]: Home
+      - listitem [ref=e32]:
+        - link " Dashboard" [ref=e33] [cursor=pointer]:
+          - /url: /analytics
+          - generic [ref=e35]: 
+          - generic [ref=e36]: Dashboard
+      - listitem [ref=e37]:
+        - generic [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]:
+            - generic [ref=e41]: 
+            - generic [ref=e42]: Aplikasi Layanan
+          - generic [ref=e43]: 
+        - text:      
+      - listitem [ref=e44]:
+        - link " Profil SSO" [ref=e45] [cursor=pointer]:
+          - /url: /profile
+          - generic [ref=e47]: 
+          - generic [ref=e48]: Profil SSO
+  - generic [ref=e49]:
+    - navigation [ref=e50]:
+      - generic [ref=e51]:
+        - button "" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: 
+        - generic [ref=e56] [cursor=pointer]:
+          - generic [ref=e57]:
+            - generic [ref=e58]: Budi Mahasiswa
+            - generic [ref=e59]: MAHASISWA
+          - img "Avatar" [ref=e61]
+    - main [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e65]:
+          - heading "Selamat Datang di," [level=1] [ref=e66]
+          - paragraph [ref=e67]: Dashboard Kemahasiswaan Polban
+        - generic [ref=e68]:
+          - paragraph [ref=e69]: Akses Cepat Layanan Anda
+          - generic [ref=e70]:
+            - link " PKM  Program Kreativitas Mahasiswa" [ref=e71] [cursor=pointer]:
+              - /url: https://pkm.andiputraw.my.id/pkm
+              - generic [ref=e72]:
+                - generic [ref=e73]: 
+                - generic [ref=e74]:
+                  - paragraph [ref=e75]:
+                    - text: PKM
+                    - generic [ref=e76]: 
+                  - paragraph [ref=e77]: Program Kreativitas Mahasiswa
+            - link " PMW  Program Mahasiswa Wirausaha" [ref=e78] [cursor=pointer]:
+              - /url: https://pmw.andiputraw.my.id/pmw/
+              - generic [ref=e79]:
+                - generic [ref=e80]: 
+                - generic [ref=e81]:
+                  - paragraph [ref=e82]:
+                    - text: PMW
+                    - generic [ref=e83]: 
+                  - paragraph [ref=e84]: Program Mahasiswa Wirausaha
+            - link " Proposal  Pengajuan Proposal Beasiswa" [ref=e85] [cursor=pointer]:
+              - /url: https://proposal.andiputraw.my.id/
+              - generic [ref=e86]:
+                - generic [ref=e87]: 
+                - generic [ref=e88]:
+                  - paragraph [ref=e89]:
+                    - text: Proposal
+                    - generic [ref=e90]: 
+                  - paragraph [ref=e91]: Pengajuan Proposal Beasiswa
+            - link " Lapor Kompetisi & Prestasi  Lapor Kompetisi & Prestasi" [ref=e92] [cursor=pointer]:
+              - /url: https://kompetisi-prestasi.andiputraw.my.id/kompetisi
+              - generic [ref=e93]:
+                - generic [ref=e94]: 
+                - generic [ref=e95]:
+                  - paragraph [ref=e96]:
+                    - text: Lapor Kompetisi & Prestasi
+                    - generic [ref=e97]: 
+                  - paragraph [ref=e98]: Lapor Kompetisi & Prestasi
+            - link " Ka-Ormawa  Pemilihan Ketua Ormawa" [ref=e99] [cursor=pointer]:
+              - /url: https://ka-ormawa.andiputraw.my.id/
+              - generic [ref=e100]:
+                - generic [ref=e101]: 
+                - generic [ref=e102]:
+                  - paragraph [ref=e103]:
+                    - text: Ka-Ormawa
+                    - generic [ref=e104]: 
+                  - paragraph [ref=e105]: Pemilihan Ketua Ormawa
+            - link " Sarpras  Peminjaman Sarana & Prasarana" [ref=e106] [cursor=pointer]:
+              - /url: https://proposal.andiputraw.my.id/
+              - generic [ref=e107]:
+                - generic [ref=e108]: 
+                - generic [ref=e109]:
+                  - paragraph [ref=e110]:
+                    - text: Sarpras
+                    - generic [ref=e111]: 
+                  - paragraph [ref=e112]: Peminjaman Sarana & Prasarana
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - paragraph [ref=e115]: Peluang Aktif (Lomba & Beasiswa)
+            - generic [ref=e118]: Memuat peluang baru...
+          - generic [ref=e119]:
+            - generic [ref=e121]:
+              - paragraph [ref=e122]: Kalender Agenda & Fase Kegiatan
+              - paragraph [ref=e123]: Jadwal fase aktif yang diintegrasikan dari PKM, PMW, Proposal, dan Ormawa
+            - generic [ref=e125]:
+              - generic [ref=e126]:
+                - generic [ref=e127]: Program
+                - generic [ref=e128]:
+                  - generic "Program SARPRAS 2025" [ref=e129]:
+                    - generic [ref=e130]: 
+                    - text: Program SARPRAS 2025
+                  - generic "Program PKM 2025" [ref=e131]:
+                    - generic [ref=e132]: 
+                    - text: Program PKM 2025
+                  - generic "Program PMW 2025" [ref=e133]:
+                    - generic [ref=e134]: 
+                    - text: Program PMW 2025
+                  - generic "Program BEASISWA 2025" [ref=e135]:
+                    - generic [ref=e136]: 
+                    - text: Program BEASISWA 2025
+                  - generic "Program KA_ORMAWA 2025" [ref=e137]:
+                    - generic [ref=e138]: 
+                    - text: Program KA_ORMAWA 2025
+              - generic [ref=e139]:
+                - generic [ref=e140]:
+                  - generic [ref=e141]:
+                    - generic [ref=e142]: "15"
+                    - generic [ref=e143]: Wed
+                  - generic [ref=e144]:
+                    - generic [ref=e145]: "16"
+                    - generic [ref=e146]: Thu
+                  - generic [ref=e147]:
+                    - generic [ref=e148]: "17"
+                    - generic [ref=e149]: Fri
+                  - generic [ref=e150]:
+                    - generic [ref=e151]: "18"
+                    - generic [ref=e152]: Sat
+                  - generic [ref=e153]:
+                    - generic [ref=e154]: "19"
+                    - generic [ref=e155]: Sun
+                  - generic [ref=e156]:
+                    - generic [ref=e157]: "20"
+                    - generic [ref=e158]: Mon
+                  - generic [ref=e159]:
+                    - generic [ref=e160]: "21"
+                    - generic [ref=e161]: Tue
+                  - generic [ref=e162]:
+                    - generic [ref=e163]: "22"
+                    - generic [ref=e164]: Wed
+                  - generic [ref=e165]:
+                    - generic [ref=e166]: "23"
+                    - generic [ref=e167]: Thu
+                  - generic [ref=e168]:
+                    - generic [ref=e169]: "24"
+                    - generic [ref=e170]: Fri
+                  - generic [ref=e171]:
+                    - generic [ref=e172]: "25"
+                    - generic [ref=e173]: Sat
+                  - generic [ref=e174]:
+                    - generic [ref=e175]: "26"
+                    - generic [ref=e176]: Sun
+                  - generic [ref=e177]:
+                    - generic [ref=e178]: "27"
+                    - generic [ref=e179]: Mon
+                  - generic [ref=e180]:
+                    - generic [ref=e181]: "28"
+                    - generic [ref=e182]: Tue
+                  - generic [ref=e183]:
+                    - generic [ref=e184]: "29"
+                    - generic [ref=e185]: Wed
+                  - generic [ref=e186]:
+                    - generic [ref=e187]: "30"
+                    - generic [ref=e188]: Thu
+                  - generic [ref=e189]:
+                    - generic [ref=e190]: "31"
+                    - generic [ref=e191]: Fri
+                  - generic [ref=e192]:
+                    - generic [ref=e193]: "01"
+                    - generic [ref=e194]: Sat
+                  - generic [ref=e195]:
+                    - generic [ref=e196]: "02"
+                    - generic [ref=e197]: Sun
+                  - generic [ref=e198]:
+                    - generic [ref=e199]: "03"
+                    - generic [ref=e200]: Mon
+                  - generic [ref=e201]:
+                    - generic [ref=e202]: "04"
+                    - generic [ref=e203]: Tue
+                  - generic [ref=e204]:
+                    - generic [ref=e205]: "05"
+                    - generic [ref=e206]: Wed
+                  - generic [ref=e207]:
+                    - generic [ref=e208]: "06"
+                    - generic [ref=e209]: Thu
+                  - generic [ref=e210]:
+                    - generic [ref=e211]: "07"
+                    - generic [ref=e212]: Fri
+                  - generic [ref=e213]:
+                    - generic [ref=e214]: "08"
+                    - generic [ref=e215]: Sat
+                  - generic [ref=e216]:
+                    - generic [ref=e217]: "09"
+                    - generic [ref=e218]: Sun
+                  - generic [ref=e219]:
+                    - generic [ref=e220]: "10"
+                    - generic [ref=e221]: Mon
+                  - generic [ref=e222]:
+                    - generic [ref=e223]: "11"
+                    - generic [ref=e224]: Tue
+                  - generic [ref=e225]:
+                    - generic [ref=e226]: "12"
+                    - generic [ref=e227]: Wed
+                  - generic [ref=e228]:
+                    - generic [ref=e229]: "13"
+                    - generic [ref=e230]: Thu
+                - generic [ref=e231]:
+                  - img
+                  - generic:
+                    - generic "Pendaftaran (15 Jan - 31 Mar)" [ref=e232] [cursor=pointer]:
+                      - generic [ref=e233]: S
+                      - generic [ref=e234]: Pendaftaran
+                    - generic "Pendaftaran (15 Jan - 31 Mar)" [ref=e235] [cursor=pointer]:
+                      - generic [ref=e236]: P
+                      - generic [ref=e237]: Pendaftaran
+                    - generic "Pendaftaran (15 Jan - 31 Mar)" [ref=e238] [cursor=pointer]:
+                      - generic [ref=e239]: P
+                      - generic [ref=e240]: Pendaftaran
+                    - generic "Pendaftaran (15 Jan - 31 Mar)" [ref=e241] [cursor=pointer]:
+                      - generic [ref=e242]: P
+                      - generic [ref=e243]: Pendaftaran
+                    - generic "Pendaftaran (15 Jan - 31 Mar)" [ref=e244] [cursor=pointer]:
+                      - generic [ref=e245]: K
+                      - generic [ref=e246]: Pendaftaran

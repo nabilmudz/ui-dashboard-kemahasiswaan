@@ -135,7 +135,7 @@ async function fetchOpportunities() {
   if (!isMahasiswa.value) return;
   loadingOpps.value = true;
   try {
-    const response = await api.get('/dashboard/opportunities');
+    const response = await api.get('/api/v1/dashboard/opportunities');
     opportunities.value = response.data?.data || [];
   } catch (err) {
     console.error('Failed to load opportunities:', err);

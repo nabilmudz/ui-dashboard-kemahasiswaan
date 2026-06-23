@@ -55,7 +55,7 @@
             Jurusan</h4>
           <div v-if="beasiswaErrors.jurusan" class="text-xs text-red-500 font-semibold mb-2">⚠️ {{
             beasiswaErrors.jurusan }}</div>
-          <div v-else-if="!beasiswaJurusanDist.data || beasiswaJurusanDist.data.length === 0"
+          <div v-else-if="!beasiswaJurusanDist.sebaran || beasiswaJurusanDist.sebaran.length === 0"
             class="text-xs text-gray-400">Tidak ada data sebaran jurusan.</div>
           <div v-else class="overflow-x-auto rounded-xl border border-gray-100/70">
             <table class="w-full text-left border-collapse text-xs">
@@ -67,7 +67,7 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
-                <tr v-for="row in beasiswaJurusanDist.data" :key="row.jurusan" class="hover:bg-gray-50/50">
+                <tr v-for="row in beasiswaJurusanDist.sebaran" :key="row.jurusan" class="hover:bg-gray-50/50">
                   <td class="py-3 px-4 font-semibold text-gray-900">{{ row.jurusan }}</td>
                   <td class="py-3 px-4 text-center font-bold text-gray-850">{{ row.totalPenerima }} Mahasiswa</td>
                   <td class="py-3 px-4 text-center font-bold text-gray-700">{{ row.percent }}%</td>
@@ -294,9 +294,9 @@ async function loadBeasiswaData() {
 
 
   promises.push(
-    api.get('/dashboard/analytics/beasiswa/monitoring')
+    api.get('/api/v1/dashboard/analytics/beasiswa/monitoring')
       .then(res => {
-        beasiswaData.value = res.data || null;
+        beasiswaData.value = res.data?.data || res.data || null;
       })
       .catch(err => {
         beasiswaErrors.value.monitoring = err.response?.data?.message || err.message || 'Gagal memuat monitoring beasiswa';
@@ -305,9 +305,9 @@ async function loadBeasiswaData() {
 
   if (authStore.user?.role === 'WD3') {
     promises.push(
-      api.get('/dashboard/analytics/beasiswa/sebaran-jurusan')
+      api.get('/api/v1/dashboard/analytics/beasiswa/sebaran-jurusan')
         .then(res => {
-          beasiswaJurusanDist.value = res.data || [];
+          beasiswaJurusanDist.value = res.data?.data || res.data || [];
         })
         .catch(err => {
           beasiswaErrors.value.jurusan = err.response?.data?.message || err.message || 'Gagal memuat sebaran jurusan beasiswa';
@@ -315,7 +315,7 @@ async function loadBeasiswaData() {
     );
   } else if (authStore.user?.role === 'KLI') {
     promises.push(
-      api.get('/dashboard/analytics/beasiswa/sebaran-tipe-sumber')
+      api.get('/api/v1/dashboard/analytics/beasiswa/sebaran-tipe-sumber')
         .then(res => {
           beasiswaFundingDist.value = res.data?.fundingDistribution || res.data?.data || res.data || [];
           beasiswaActivePrograms.value = res.data?.activePrograms || [];
@@ -326,10 +326,10 @@ async function loadBeasiswaData() {
     );
   } else if (authStore.user?.role === 'STAFF') {
     promises.push(
-      api.get('/dashboard/analytics/beasiswa/status-aktivitas')
+      api.get('/api/v1/dashboard/analytics/beasiswa/status-aktivitas')
         .then(res => {
-          beasiswaVerificationStages.value = res.data?.verificationStages || [];
-          beasiswaRecentActivities.value = res.data?.recentActivities || [];
+          beasiswaVerificationStages.value = res.data?.data?.statusDistribution || {};
+          beasiswaRecentActivities.value = res.data?.data?.aktivitasPengajuan || [];
         })
         .catch(err => {
           beasiswaErrors.value.aktivitas = err.response?.data?.message || err.message || 'Gagal memuat status aktivitas beasiswa';

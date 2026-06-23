@@ -1,0 +1,5 @@
+NIM/NIP, password, role
+123456789, rahasia123, MAHASISWA
+987654321, rahasia123, STAFF
+111222333, rahasia123, WD3
+333333333, rahasia123, KLI
