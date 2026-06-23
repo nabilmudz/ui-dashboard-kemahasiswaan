@@ -173,6 +173,44 @@ function getPercentage(value, total) {
   return Math.round((value / total) * 100);
 }
 
+function parseStatusDistribution(data) {
+  const dist = data?.distribution;
+  if (!dist) return [];
+  
+  const statuses = ['PENDING', 'REVIEWED', 'APPROVED', 'REJECTED', 'REVISION'];
+  return statuses.map(status => {
+    let count = 0;
+    let percent = 0;
+    
+    const val = dist[status];
+    if (val !== undefined && val !== null) {
+      if (typeof val === 'object') {
+        count = val.count || 0;
+        percent = val.percent || 0;
+      } else {
+        count = val;
+        const camelStatus = status.charAt(0) + status.slice(1).toLowerCase();
+        const percentKey = 'percent' + camelStatus;
+        percent = dist[percentKey] || 0;
+      }
+    }
+    
+    const labels = {
+      PENDING: 'Pending',
+      REVIEWED: 'Reviewed',
+      APPROVED: 'Approved',
+      REJECTED: 'Rejected',
+      REVISION: 'Revision'
+    };
+    
+    return {
+      status: labels[status] || status,
+      count,
+      percent
+    };
+  });
+}
+
 async function loadPkmData() {
   loading.value = true;
   errorMsg.value = '';
@@ -184,7 +222,10 @@ async function loadPkmData() {
   promises.push(
     api.get('/dashboard/analytics/pkm/kpi-summary')
       .then(res => {
-        pkmData.value = res.data || {};
+        pkmData.value = {
+          kpi: res.data?.data || {},
+          scoreboardJurusan: res.data?.data?.scoreboardJurusan || null
+        };
       })
       .catch(err => {
         pkmErrors.value.kpi = err.response?.data?.message || err.message || 'Gagal memuat ringkasan KPI PKM';
@@ -195,7 +236,7 @@ async function loadPkmData() {
     promises.push(
       api.get('/dashboard/analytics/pkm/status-distribution')
         .then(res => {
-          pkmStatusDist.value = res.data?.data || res.data || [];
+          pkmStatusDist.value = parseStatusDistribution(res.data?.data || res.data);
         })
         .catch(err => {
           pkmErrors.value.statusDist = err.response?.data?.message || err.message || 'Gagal memuat distribusi status PKM';
@@ -204,7 +245,12 @@ async function loadPkmData() {
     promises.push(
       api.get('/dashboard/analytics/pkm/reviewer-progress')
         .then(res => {
-          pkmReviewerProg.value = res.data?.data || res.data || [];
+          pkmReviewerProg.value = (res.data?.data || []).map(r => ({
+            reviewer: r.reviewerName || r.reviewer || 'Unknown Reviewer',
+            count: r.totalReviewed !== undefined ? r.totalReviewed : (r.count || 0),
+            totalAssigned: r.totalAssigned || 0,
+            progress: r.progressPercent !== undefined ? r.progressPercent : (r.progress || 0)
+          }));
         })
         .catch(err => {
           pkmErrors.value.reviewerProg = err.response?.data?.message || err.message || 'Gagal memuat progres reviewer PKM';
@@ -214,7 +260,16 @@ async function loadPkmData() {
     promises.push(
       api.get('/dashboard/analytics/pkm/distribution-jurusan-skema')
         .then(res => {
-          pkmSchemeDist.value = res.data?.data || res.data || [];
+          const matrix = res.data?.data?.matrix || res.data?.matrix || [];
+          const schemeMap = {};
+          matrix.forEach(row => {
+            if (row.perSkema) {
+              Object.entries(row.perSkema).forEach(([scheme, count]) => {
+                schemeMap[scheme] = (schemeMap[scheme] || 0) + count;
+              });
+            }
+          });
+          pkmSchemeDist.value = Object.entries(schemeMap).map(([scheme, count]) => ({ scheme, count }));
         })
         .catch(err => {
           pkmErrors.value.schemeDist = err.response?.data?.message || err.message || 'Gagal memuat sebaran skema PKM';
@@ -223,7 +278,10 @@ async function loadPkmData() {
     promises.push(
       api.get('/dashboard/analytics/pkm/trend-tahunan')
         .then(res => {
-          pkmAnnualTrend.value = res.data?.data || res.data || [];
+          pkmAnnualTrend.value = (res.data?.data || []).map(item => ({
+            year: item.tahun || 0,
+            count: item.totalProposal || 0
+          }));
         })
         .catch(err => {
           pkmErrors.value.annualTrend = err.response?.data?.message || err.message || 'Gagal memuat tren tahunan PKM';

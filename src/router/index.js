@@ -63,9 +63,7 @@ const routes = [
           },
           {
             path: 'recap',
-            name: 'analytics-recap',
-            component: () => import('../views/analytics/RecapView.vue'),
-            meta: { requiresAuth: true }
+            redirect: '/analytics/overview'
           },
           {
             path: 'venues',

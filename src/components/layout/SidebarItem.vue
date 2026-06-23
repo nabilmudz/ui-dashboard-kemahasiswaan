@@ -5,7 +5,7 @@
       v-if="href"
       :href="href"
       target="_blank"
-      class="nav-button mx-[10px] my-[5px] rounded-[5px] flex items-center transition-all duration-500 select-none text-[13px] font-semibold text-black no-underline bg-white hover:bg-brand-accent"
+      class="nav-button mx-[10px] my-[5px] rounded-[5px] flex items-center transition-all duration-500  text-[13px] font-semibold text-black no-underline bg-white hover:bg-brand-accent"
     >
       <!-- Icon Wrapper -->
       <div class="w-[60px] h-[45px] flex items-center justify-center text-[18px] shrink-0 text-black">
@@ -22,7 +22,7 @@
     <router-link 
       v-else
       :to="to" 
-      class="nav-button mx-[10px] my-[5px] rounded-[5px] flex items-center transition-all duration-500 select-none text-[13px] font-semibold text-black no-underline"
+      class="nav-button mx-[10px] my-[5px] rounded-[5px] flex items-center transition-all duration-500  text-[13px] font-semibold text-black no-underline"
       :class="[
         isActive ? 'bg-brand-accent' : 'bg-white hover:bg-brand-accent'
       ]"
@@ -57,7 +57,7 @@
   >
     <!-- Toggle Header -->
     <div 
-      class="nav-button mx-[10px] my-[5px] rounded-[5px] flex items-center justify-between transition-all duration-500 text-[13px] font-semibold cursor-pointer select-none text-black bg-white hover:bg-brand-accent"
+      class="nav-button mx-[10px] my-[5px] rounded-[5px] flex items-center justify-between transition-all duration-500 text-[13px] font-semibold cursor-pointer  text-black bg-white hover:bg-brand-accent"
       :class="[
         isSubrouteActive ? 'bg-brand-accent' : ''
       ]"
@@ -89,7 +89,7 @@
     <ul 
       v-if="!isCollapsed"
       v-show="isExpanded"
-      class="bg-[#f8f9fa] rounded-[5px] mx-[10px] -mt-[5px] py-[5px] pl-[20px] select-none list-none border-0 shadow-none"
+      class="bg-[#f8f9fa] rounded-[5px] mx-[10px] -mt-[5px] py-[5px] pl-[20px]  list-none border-0 shadow-none"
     >
       <li v-for="child in children" :key="child.to || child.href" class="list-none">
         <a 
@@ -124,7 +124,7 @@
       v-else 
       class="absolute left-full top-[10px] ml-0 bg-white py-[10px] px-[10px] rounded-r-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 z-50 min-w-[190px] list-none shadow-lg border-0"
     >
-      <li class="px-[10px] py-[3px] text-[13px] font-semibold text-black border-b border-black/5 mb-1 select-none">{{ label }}</li>
+      <li class="px-[10px] py-[3px] text-[13px] font-semibold text-black border-b border-black/5 mb-1 ">{{ label }}</li>
       <li v-for="child in children" :key="child.to || child.href" class="list-none">
         <a 
           v-if="child.href"

@@ -1,5 +1,5 @@
 <template>
-  <a v-if="href" :href="href" target="_blank" class="home-item group text-start select-none no-underline block">
+  <a v-if="href" :href="href" target="_blank" class="home-item group text-start  no-underline block">
     <div class="flex items-center gap-3">
       <!-- Left Icon -->
       <i :class="[icon, 'icon']" :style="{ color: color }"></i>
@@ -16,7 +16,7 @@
       </div>
     </div>
   </a>
-  <router-link v-else :to="to" class="home-item group text-start select-none no-underline block">
+  <router-link v-else :to="to" class="home-item group text-start  no-underline block">
     <div class="flex items-center gap-3">
       <!-- Left Icon -->
       <i :class="[icon, 'icon']" :style="{ color: color }"></i>

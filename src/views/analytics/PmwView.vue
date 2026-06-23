@@ -234,7 +234,11 @@ async function loadPmwData() {
   promises.push(
     api.get('/dashboard/analytics/pmw/dana-per-jurusan')
       .then(res => {
-        pmwData.value = res.data || {};
+        const data = res.data?.data || {};
+        pmwData.value = {
+          totalDanaDisalurkan: data.totalDanaDisalurkan || 0,
+          data: data.danaPerProdi || data.data || []
+        };
       })
       .catch(err => {
         pmwErrors.value.dana = err.response?.data?.message || err.message || 'Gagal memuat alokasi dana PMW';
@@ -255,7 +259,9 @@ async function loadPmwData() {
     promises.push(
       api.get('/dashboard/analytics/pmw/sebaran-bidang-usaha')
         .then(res => {
-          pmwBusinessCategories.value = res.data?.data || res.data || [];
+          pmwBusinessCategories.value = {
+            data: res.data?.data?.sebaran || []
+          };
         })
         .catch(err => {
           pmwErrors.value.categories = err.response?.data?.message || err.message || 'Gagal memuat bidang usaha PMW';
@@ -274,8 +280,9 @@ async function loadPmwData() {
     promises.push(
       api.get('/dashboard/analytics/pmw/staff-progress')
         .then(res => {
-          pmwReviewerProgress.value = res.data?.reviewerProgress || [];
-          pmwRequiredDocuments.value = res.data?.requiredDocuments || [];
+          const data = res.data?.data || {};
+          pmwReviewerProgress.value = data.reviewerProgress || [];
+          pmwRequiredDocuments.value = data.requiredDocuments || [];
         })
         .catch(err => {
           pmwErrors.value.staff = err.response?.data?.message || err.message || 'Gagal memuat progres dokumen PMW';

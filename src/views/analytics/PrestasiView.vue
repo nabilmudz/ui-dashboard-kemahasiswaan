@@ -180,8 +180,8 @@ const authStore = useAuthStore();
 const loading = ref(true);
 const errorMsg = ref('');
 const prestasiData = ref(null);
-const prestasiIkuTrend = ref([]);
-const prestasiInterestDist = ref([]);
+const prestasiIkuTrend = ref({});
+const prestasiInterestDist = ref({});
 const prestasiGagalTanding = ref(null);
 const prestasiLeadTime = ref(null);
 const prestasiErrors = ref({});
@@ -209,7 +209,7 @@ async function loadPrestasiData() {
   promises.push(
     api.get('/dashboard/analytics/prestasi/success-rate')
       .then(res => {
-        prestasiData.value = res.data || null;
+        prestasiData.value = res.data?.data || null;
       })
       .catch(err => {
         prestasiErrors.value.rate = err.response?.data?.message || err.message || 'Gagal memuat success rate prestasi';
@@ -220,7 +220,9 @@ async function loadPrestasiData() {
     promises.push(
       api.get('/dashboard/analytics/prestasi/tren-iku')
         .then(res => {
-          prestasiIkuTrend.value = res.data?.data || res.data || [];
+          prestasiIkuTrend.value = {
+            data: res.data?.data || []
+          };
         })
         .catch(err => {
           prestasiErrors.value.iku = err.response?.data?.message || err.message || 'Gagal memuat tren IKU prestasi';
@@ -230,7 +232,9 @@ async function loadPrestasiData() {
     promises.push(
       api.get('/dashboard/analytics/prestasi/sebaran-kategori')
         .then(res => {
-          prestasiInterestDist.value = res.data?.data || res.data || [];
+          prestasiInterestDist.value = {
+            data: res.data?.data || []
+          };
         })
         .catch(err => {
           prestasiErrors.value.kategori = err.response?.data?.message || err.message || 'Gagal memuat sebaran minat prestasi';
@@ -239,7 +243,7 @@ async function loadPrestasiData() {
     promises.push(
       api.get('/dashboard/analytics/prestasi/rasio-gagal-tanding')
         .then(res => {
-          prestasiGagalTanding.value = res.data || null;
+          prestasiGagalTanding.value = res.data?.data || null;
         })
         .catch(err => {
           prestasiErrors.value.lpj = err.response?.data?.message || err.message || 'Gagal memuat audit LPJ';
@@ -249,7 +253,7 @@ async function loadPrestasiData() {
     promises.push(
       api.get('/dashboard/analytics/prestasi/lead-time-revision')
         .then(res => {
-          prestasiLeadTime.value = res.data || null;
+          prestasiLeadTime.value = res.data?.data || null;
         })
         .catch(err => {
           prestasiErrors.value.leadTime = err.response?.data?.message || err.message || 'Gagal memuat pemrosesan berkas';

@@ -16,6 +16,13 @@ api.interceptors.request.use(
     if (authStore.accessToken) {
       config.headers['Authorization'] = `Bearer ${authStore.accessToken}`;
     }
+    
+    // Special handling: SSO auth requests do not use the /api/v1 prefix
+    if (config.url && (config.url.startsWith('/auth/') || config.url.includes('/auth/sso/'))) {
+      if (config.baseURL) {
+        config.baseURL = config.baseURL.replace(/\/api\/v1\/?$/, '');
+      }
+    }
     return config;
   },
   (error) => {

@@ -284,16 +284,87 @@
                   <span class="text-[10px] text-gray-500 mt-1 block font-medium">Rekapitulasi Ormawa & Okupansi
                     Tempat</span>
                 </div>
-                <div class="flex gap-2 mt-5">
-                  <router-link to="/analytics/recap"
-                    class="flex-1 py-2 bg-white hover:bg-gray-50 text-center text-[10px] font-bold text-gray-800 rounded-xl border border-gray-100 transition-colors no-underline block">
-                    Rekap Ormawa
-                  </router-link>
-                  <router-link to="/analytics/venues"
-                    class="flex-1 py-2 bg-white hover:bg-gray-50 text-center text-[10px] font-bold text-gray-800 rounded-xl border border-gray-100 transition-colors no-underline block">
-                    Jadwal Ruang
-                  </router-link>
+                <router-link to="/analytics/venues"
+                  class="mt-5 w-full py-2 bg-white hover:bg-gray-50 text-center text-[10px] font-bold text-gray-800 rounded-xl border border-gray-100 transition-colors no-underline block">
+                  Buka Okupansi Venue <i class="fa-solid fa-chevron-right ml-1"></i>
+                </router-link>
+              </div>
+            </div>
+
+            <!-- Rekap Ormawa Table (Visible only to Admins who have access to SARPRAS) -->
+            <div v-if="allowedAppSources.includes('SARPRAS') && isAdmin" class="border-t border-gray-100 pt-6 mt-6 space-y-4">
+              <div class="flex justify-between items-center flex-wrap gap-3 mb-2">
+                <div>
+                  <h3 class="text-sm font-bold text-gray-955 uppercase tracking-wide">Rekap Status Per Ormawa (Data Sarpras)</h3>
+                  <p class="text-xs text-gray-500 mt-0.5">Ringkasan status pengajuan fasilitas dan kegiatan per unit organisasi mahasiswa.</p>
                 </div>
+                <!-- Search bar -->
+                <div class="flex items-center gap-2">
+                  <input 
+                    v-model="recapSearch" 
+                    type="text" 
+                    placeholder="Cari nama Ormawa..." 
+                    class="px-3 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:border-brand-orange w-48 font-semibold"
+                  />
+                  <select 
+                    v-model="recapPeriod" 
+                    class="px-3 py-1.5 border border-gray-300 rounded text-xs bg-white focus:outline-none font-semibold text-gray-700"
+                  >
+                    <option value="">Semua Tahun</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="overflow-x-auto rounded-xl">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="bg-gray-50 border-b border-gray-100">
+                      <th class="py-3 px-4 font-bold text-gray-700">Nama Ormawa</th>
+                      <th class="py-3 px-4 font-bold text-gray-700">NPA</th>
+                      <th class="py-3 px-4 font-bold text-gray-700 text-center">Total Pengajuan</th>
+                      <th class="py-3 px-4 font-bold text-gray-700 text-center">Pending (%)</th>
+                      <th class="py-3 px-4 font-bold text-gray-700 text-center">Revisi (%)</th>
+                      <th class="py-3 px-4 font-bold text-gray-700 text-center">Ditolak (%)</th>
+                      <th class="py-3 px-4 font-bold text-gray-700 text-center">Disetujui (%)</th>
+                      <th class="py-3 px-4 font-bold text-gray-700 text-center">Approval Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100">
+                    <tr v-if="filteredRecap.length === 0">
+                      <td colspan="8" class="py-6 text-center text-gray-400 font-semibold">Tidak ada data rekap Ormawa yang sesuai.</td>
+                    </tr>
+                    <tr v-for="item in filteredRecap" :key="item.ormawaNpa" class="hover:bg-gray-50/50 transition-colors">
+                      <td class="py-3 px-4 font-semibold text-gray-955">
+                        <a :href="item.deepLinkUrl" target="_blank" class="hover:underline text-gray-955">{{ item.ormawaNama }}</a>
+                      </td>
+                      <td class="py-3 px-4 font-mono font-semibold text-gray-500">{{ item.ormawaNpa }}</td>
+                      <td class="py-3 px-4 text-center font-bold text-gray-900">{{ item.totalPengajuan }}</td>
+                      <td class="py-3 px-4 text-center font-medium text-amber-600 bg-amber-50/20">
+                        {{ item.breakdown.PENDING }} <span class="text-[9px] text-gray-400">({{ item.breakdown.percentPending }}%)</span>
+                      </td>
+                      <td class="py-3 px-4 text-center font-medium text-brand-orange bg-brand-accent/50">
+                        {{ item.breakdown.REVISION }} <span class="text-[9px] text-gray-400">({{ item.breakdown.percentRevision }}%)</span>
+                      </td>
+                      <td class="py-3 px-4 text-center font-medium text-red-600 bg-red-50/20">
+                        {{ item.breakdown.REJECTED }} <span class="text-[9px] text-gray-400">({{ item.breakdown.percentRejected }}%)</span>
+                      </td>
+                      <td class="py-3 px-4 text-center font-medium text-emerald-600 bg-emerald-50/20">
+                        {{ item.breakdown.APPROVED }} <span class="text-[9px] text-gray-400">({{ item.breakdown.percentApproved }}%)</span>
+                      </td>
+                      <td class="py-3 px-4 text-center">
+                        <div class="flex items-center justify-center gap-1.5">
+                          <span class="font-bold text-gray-900">{{ item.approvalRate }}%</span>
+                          <!-- Small mini bar -->
+                          <div class="w-10 bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-emerald-500 h-full" :style="{ width: item.approvalRate + '%' }"></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -328,6 +399,20 @@ const errorMsg = ref('');
 const mySubmissions = ref([]);
 const pendingProposals = ref([]);
 const ormawaRecaps = ref([]);
+const recapSearch = ref('');
+const recapPeriod = ref('');
+
+const filteredRecap = computed(() => {
+  return ormawaRecaps.value.filter(item => {
+    const matchSearch = item.ormawaNama.toLowerCase().includes(recapSearch.value.toLowerCase()) || 
+                        item.ormawaNpa.toLowerCase().includes(recapSearch.value.toLowerCase());
+    let matchPeriod = true;
+    if (recapPeriod.value && item.lastSubmittedAt) {
+      matchPeriod = item.lastSubmittedAt.startsWith(recapPeriod.value);
+    }
+    return matchSearch && matchPeriod;
+  });
+});
 const approvedVenues = ref([]);
 const pkmData = ref({});
 const pmwData = ref({});
@@ -418,33 +503,48 @@ async function initDashboard() {
       if (allowedAppSources.value.includes('PKM') && isAdmin.value) {
         promises.push(
           api.get('/dashboard/analytics/pkm/kpi-summary')
-            .then(res => { pkmData.value = res.data || {}; })
+            .then(res => {
+              pkmData.value = {
+                kpi: res.data?.data || {},
+                scoreboardJurusan: res.data?.data?.scoreboardJurusan || null
+              };
+            })
             .catch(err => console.error('Error fetching pkm overview:', err))
         );
       }
       if (allowedAppSources.value.includes('PMW') && isAdmin.value) {
         promises.push(
           api.get('/dashboard/analytics/pmw/dana-per-jurusan')
-            .then(res => { pmwData.value = res.data || {}; })
+            .then(res => { pmwData.value = res.data?.data || {}; })
             .catch(err => console.error('Error fetching pmw overview:', err))
         );
         promises.push(
           api.get('/dashboard/analytics/pmw/rasio-kelulusan')
-            .then(res => { pmwGraduationRatio.value = res.data || null; })
+            .then(res => {
+              const list = res.data?.data || [];
+              const totalPendaftar = list.reduce((sum, item) => sum + (item.totalPendaftar || 0), 0);
+              const totalLolos = list.reduce((sum, item) => sum + (item.totalLolos || 0), 0);
+              const ratePercent = totalPendaftar > 0 ? Math.round((totalLolos / totalPendaftar) * 100) : 0;
+              pmwGraduationRatio.value = {
+                totalPartisipasi: totalPendaftar,
+                ratePercent: ratePercent,
+                data: list
+              };
+            })
             .catch(err => console.error('Error fetching pmw ratio overview:', err))
         );
       }
       if (allowedAppSources.value.includes('BEASISWA')) {
         promises.push(
           api.get('/dashboard/analytics/beasiswa/monitoring')
-            .then(res => { beasiswaData.value = res.data || null; })
+            .then(res => { beasiswaData.value = res.data?.data || null; })
             .catch(err => console.error('Error fetching beasiswa overview:', err))
         );
       }
       if (allowedAppSources.value.includes('PRESTASI') && isAdmin.value) {
         promises.push(
           api.get('/dashboard/analytics/prestasi/success-rate')
-            .then(res => { prestasiData.value = res.data || null; })
+            .then(res => { prestasiData.value = res.data?.data || null; })
             .catch(err => console.error('Error fetching prestasi overview:', err))
         );
       }

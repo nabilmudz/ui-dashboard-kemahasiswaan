@@ -1,6 +1,6 @@
 <template>
   <aside 
-    class="sidebar bg-white py-2 fixed top-0 left-0 h-full border-r border-black/5 z-[90] transition-all duration-500 ease-in-out select-none flex flex-col shadow-none"
+    class="sidebar bg-white py-2 fixed top-0 left-0 h-full border-r border-black/5 z-[90] transition-all duration-500 ease-in-out  flex flex-col shadow-none"
     :class="[isCollapsed ? 'w-[78px]' : 'w-[15rem]']"
   >
     <!-- Logo & Store Details (Exact CSS match) -->
@@ -108,7 +108,6 @@ const dashboardChildren = computed(() => {
     children.push({ to: '/analytics/prestasi', label: 'Kompetisi & Prestasi', icon: 'fa-regular fa-trophy' });
   }
   if (allowedAppSources.value.includes('SARPRAS') && isAdmin.value) {
-    children.push({ to: '/analytics/recap', label: 'Rekap Ormawa', icon: 'fa-regular fa-chart-column' });
     children.push({ to: '/analytics/venues', label: 'Okupansi Venue', icon: 'fa-regular fa-door-open' });
   }
 

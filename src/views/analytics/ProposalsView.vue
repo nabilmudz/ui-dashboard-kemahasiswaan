@@ -16,7 +16,7 @@
     <div v-else class="space-y-4">
       <div class="flex justify-between items-center flex-wrap gap-3 mb-2">
         <div>
-          <h3 class="text-sm font-bold text-gray-955 uppercase tracking-wide">Antrean Pending Proposal (Real-time)</h3>
+          <h3 class="text-sm font-bold text-gray-955 uppercase tracking-wide">Antrean Pending Proposal</h3>
           <p class="text-xs text-gray-500 mt-0.5">Daftar seluruh berkas pending yang memerlukan tindakan persetujuan Anda.</p>
         </div>
         

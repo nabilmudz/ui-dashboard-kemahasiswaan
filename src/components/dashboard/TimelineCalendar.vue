@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col select-none border border-gray-200 rounded-lg overflow-hidden bg-white text-xs">
+  <div class="flex flex-col  border border-gray-200 rounded-lg overflow-hidden bg-white text-xs">
     
     <!-- Loading and Error State -->
     <div v-if="loading" class="p-12 text-center flex flex-col items-center justify-center">
@@ -75,7 +75,7 @@
           <!-- Interactive Task Bars Layer -->
           <div class="absolute inset-0 z-20 pointer-events-none">
             <div v-for="task in tasks" :key="task.id"
-              class="absolute h-[32px] rounded-[16px] border flex items-center px-3 shadow-sm cursor-pointer select-none text-white pointer-events-auto transition-transform hover:scale-[1.02]"
+              class="absolute h-[32px] rounded-[16px] border flex items-center px-3 shadow-sm cursor-pointer  text-white pointer-events-auto transition-transform hover:scale-[1.02]"
               :class="task.themeClass" :style="getTaskStyle(task)"
               :title="`${task.name} (${formatDate(task.startDateStr)} - ${formatDate(task.endDateStr)})`"
               @click="openLink(task.deepLinkUrl)"

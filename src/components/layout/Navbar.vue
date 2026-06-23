@@ -14,7 +14,7 @@
       <!-- Profile Section Dropdown -->
       <div class="relative" ref="dropdownRef">
         <a 
-          class="block no-underline select-none" 
+          class="block no-underline " 
           style="cursor: pointer" 
           @click="isOpen = !isOpen"
         >

@@ -253,10 +253,10 @@ const loading = ref(true);
 const errorMsg = ref('');
 const beasiswaData = ref(null);
 const beasiswaKajurData = ref(null);
-const beasiswaJurusanDist = ref([]);
-const beasiswaFundingDist = ref([]);
+const beasiswaJurusanDist = ref({});
+const beasiswaFundingDist = ref({});
 const beasiswaActivePrograms = ref([]);
-const beasiswaVerificationStages = ref([]);
+const beasiswaVerificationStages = ref({});
 const beasiswaRecentActivities = ref([]);
 const beasiswaErrors = ref({});
 
@@ -296,7 +296,7 @@ async function loadBeasiswaData() {
   promises.push(
     api.get('/dashboard/analytics/beasiswa/monitoring')
       .then(res => {
-        beasiswaData.value = res.data || null;
+        beasiswaData.value = res.data?.data || null;
       })
       .catch(err => {
         beasiswaErrors.value.monitoring = err.response?.data?.message || err.message || 'Gagal memuat monitoring beasiswa';
@@ -307,7 +307,9 @@ async function loadBeasiswaData() {
     promises.push(
       api.get('/dashboard/analytics/beasiswa/sebaran-jurusan')
         .then(res => {
-          beasiswaJurusanDist.value = res.data || [];
+          beasiswaJurusanDist.value = {
+            data: res.data?.data?.sebaran || []
+          };
         })
         .catch(err => {
           beasiswaErrors.value.jurusan = err.response?.data?.message || err.message || 'Gagal memuat sebaran jurusan beasiswa';
@@ -317,8 +319,12 @@ async function loadBeasiswaData() {
     promises.push(
       api.get('/dashboard/analytics/beasiswa/sebaran-tipe-sumber')
         .then(res => {
-          beasiswaFundingDist.value = res.data?.fundingDistribution || res.data?.data || res.data || [];
-          beasiswaActivePrograms.value = res.data?.activePrograms || [];
+          const data = res.data?.data || {};
+          beasiswaFundingDist.value = {
+            bySumberDana: data.bySumberDana || [],
+            byTipe: data.byTipe || []
+          };
+          beasiswaActivePrograms.value = data.programBerjalan || [];
         })
         .catch(err => {
           beasiswaErrors.value.sumber = err.response?.data?.message || err.message || 'Gagal memuat tipe sumber beasiswa';
@@ -328,8 +334,9 @@ async function loadBeasiswaData() {
     promises.push(
       api.get('/dashboard/analytics/beasiswa/status-aktivitas')
         .then(res => {
-          beasiswaVerificationStages.value = res.data?.verificationStages || [];
-          beasiswaRecentActivities.value = res.data?.recentActivities || [];
+          const data = res.data?.data || {};
+          beasiswaVerificationStages.value = data.statusDistribution || {};
+          beasiswaRecentActivities.value = data.aktivitasPengajuan || [];
         })
         .catch(err => {
           beasiswaErrors.value.aktivitas = err.response?.data?.message || err.message || 'Gagal memuat status aktivitas beasiswa';

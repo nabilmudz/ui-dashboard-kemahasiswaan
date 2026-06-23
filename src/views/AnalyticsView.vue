@@ -1,5 +1,5 @@
 <template>
-  <section class="p-8 lg:p-12 relative select-none min-h-full">
+  <section class="p-8 lg:p-12 relative  min-h-full">
     <!-- Header Banner -->
     <div class="absolute w-full h-[200px] top-0 left-0 right-0 z-0 bg-brand-orange"></div>
 

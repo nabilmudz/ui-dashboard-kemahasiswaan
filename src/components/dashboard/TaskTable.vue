@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col select-none">
+  <div class="flex flex-col ">
     <!-- Table Wrapper -->
     <div class="overflow-x-auto border border-gray-200 rounded-lg">
       <table class="w-full text-left border-collapse text-xs">

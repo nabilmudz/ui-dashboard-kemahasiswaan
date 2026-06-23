@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen w-screen flex flex-col justify-center items-center bg-[#f8f9fa] font-sans p-4 relative">
     <!-- Top-left Brand Logo -->
-    <!-- <div class="sm:absolute sm:top-8 sm:left-8 flex items-center gap-2 mb-8 sm:mb-0 select-none">
+    <!-- <div class="sm:absolute sm:top-8 sm:left-8 flex items-center gap-2 mb-8 sm:mb-0 ">
       <img :src="logoImg" alt="logo" class="w-8 h-8 object-contain">
       <span class="font-bold text-slate-800 text-lg">SSO Gateway</span>
     </div> -->
@@ -56,7 +56,7 @@
         <button 
           type="submit" 
           :disabled="loading" 
-          class="w-full font-semibold text-white rounded-xl py-3 transition-all flex items-center justify-center gap-1.5 cursor-pointer border-0 select-none text-sm disabled:opacity-80 bg-brand-orange hover:bg-[#1d4ed8] active:bg-[#1e40af] shadow-sm shadow-blue-500/10"
+          class="w-full font-semibold text-white rounded-xl py-3 transition-all flex items-center justify-center gap-1.5 cursor-pointer border-0  text-sm disabled:opacity-80 bg-brand-orange hover:bg-[#1d4ed8] active:bg-[#1e40af] shadow-sm shadow-blue-500/10"
         >
           <span>Masuk</span>
           <i 

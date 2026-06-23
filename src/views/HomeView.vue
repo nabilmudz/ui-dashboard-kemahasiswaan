@@ -1,5 +1,5 @@
 <template>
-  <section class="p-8 lg:p-12 relative select-none min-h-full">
+  <section class="p-8 lg:p-12 relative  min-h-full">
     <!-- Orange Header Banner -->
     <div class="absolute w-full h-[200px] top-0 left-0 right-0 z-0 bg-brand-orange"></div>
     
@@ -92,7 +92,7 @@
 
       <!-- 8/12 Column: Timeline Calendar (On Right) -->
       <div class="lg:col-span-8 rounded-2xl bg-white p-6 shadow-sm flex flex-col">
-        <div class="flex justify-between items-center mb-4 flex-wrap gap-2 select-none">
+        <div class="flex justify-between items-center mb-4 flex-wrap gap-2 ">
           <div>
             <p class="font-bold text-xs text-gray-400 uppercase tracking-wider m-0">Kalender Agenda & Fase Kegiatan</p>
             <p class="text-[11px] text-gray-500 font-medium mt-0.5">Jadwal fase aktif yang diintegrasikan dari PKM, PMW, Proposal, dan Ormawa</p>
