@@ -67,13 +67,145 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
-                <tr v-for="row in beasiswaJurusanDist.data" :key="row.jurusan" class="hover:bg-gray-50/50">
+                <tr v-for="row in paginatedBeasiswaJurusan" :key="row.jurusan" class="hover:bg-gray-50/50">
                   <td class="py-3 px-4 font-semibold text-gray-900">{{ row.jurusan }}</td>
-                  <td class="py-3 px-4 text-center font-bold text-gray-850">{{ row.totalPenerima }} Mahasiswa</td>
+                  <td class="py-3 px-4 text-center font-bold text-gray-855">{{ row.totalPenerima }} Mahasiswa</td>
                   <td class="py-3 px-4 text-center font-bold text-gray-700">{{ row.percent }}%</td>
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          <!-- Pagination Controls for Jurusan -->
+          <div v-if="beasiswaJurusanDist.data && beasiswaJurusanDist.data.length > 0" class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100 flex-wrap gap-3 text-xs select-none">
+            <div class="flex items-center gap-2">
+              <span class="text-gray-500 font-medium">Tampilkan per halaman:</span>
+              <select 
+                v-model="jurusanPerPage" 
+                @change="jurusanPage = 1"
+                class="px-2 py-1 border border-gray-200 rounded bg-white text-gray-700 font-semibold focus:outline-none focus:border-brand-orange cursor-pointer"
+              >
+                <option :value="5">5</option>
+                <option :value="10">10</option>
+                <option :value="20">20</option>
+                <option :value="50">50</option>
+                <option :value="100">100</option>
+              </select>
+              <span class="text-gray-400 font-medium ml-1">
+                Menampilkan {{ jurusanStartIndex + 1 }}-{{ Math.min(jurusanEndIndex, beasiswaJurusanDist.data.length) }} dari {{ beasiswaJurusanDist.data.length }} data
+              </span>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button 
+                @click="prevJurusanPage" 
+                :disabled="jurusanPage === 1"
+                class="p-1.5 border border-gray-200 rounded bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center"
+                title="Halaman sebelumnya"
+              >
+                <i class="fa-solid fa-chevron-left text-[9px]"></i>
+              </button>
+              
+              <button 
+                v-for="page in totalJurusanPages" 
+                :key="page"
+                @click="jurusanPage = page"
+                class="px-2.5 py-1 border rounded text-[10px] font-bold transition-all cursor-pointer"
+                :class="jurusanPage === page ? 'bg-brand-orange border-brand-orange text-white' : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'"
+              >
+                {{ page }}
+              </button>
+
+              <button 
+                @click="nextJurusanPage" 
+                :disabled="jurusanPage === totalJurusanPages"
+                class="p-1.5 border border-gray-200 rounded bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center"
+                title="Halaman berikutnya"
+              >
+                <i class="fa-solid fa-chevron-right text-[9px]"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performa Program Table for WD3 -->
+        <div v-if="beasiswaData" class="space-y-3 pt-6 border-t border-gray-100">
+          <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wide">Performa Program Proposal Aktif</h4>
+          <div class="overflow-x-auto rounded-xl border border-gray-100/70">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <th class="py-3 px-4 font-bold text-gray-700">Nama Program</th>
+                  <th class="py-3 px-4 font-bold text-gray-700 text-center">Pendaftar</th>
+                  <th class="py-3 px-4 font-bold text-gray-700 text-center">Diterima ACC</th>
+                  <th class="py-3 px-4 font-bold text-gray-700 text-center">Rasio Sukses</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr v-if="paginatedBeasiswaPrograms.length === 0">
+                  <td colspan="4" class="py-6 text-center text-gray-400 font-semibold">Tidak ada program proposal aktif.</td>
+                </tr>
+                <tr v-for="prog in paginatedBeasiswaPrograms" :key="prog.programId" class="hover:bg-gray-50/50">
+                  <td class="py-3 px-4 font-semibold text-gray-900">{{ prog.programName }}</td>
+                  <td class="py-3 px-4 text-center font-medium text-gray-600">{{ prog.totalPengajuan }}</td>
+                  <td class="py-3 px-4 text-center font-bold text-emerald-600">{{ prog.totalDiterima }}</td>
+                  <td class="py-3 px-4 text-center font-bold text-gray-800">
+                    {{ getPercentage(prog.totalDiterima, prog.totalPengajuan) }}%
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Controls for Programs (WD3) -->
+          <div v-if="beasiswaData.perProgram && beasiswaData.perProgram.length > 0" class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100 flex-wrap gap-3 text-xs select-none">
+            <div class="flex items-center gap-2">
+              <span class="text-gray-500 font-medium">Tampilkan per halaman:</span>
+              <select 
+                v-model="programPerPage" 
+                @change="programPage = 1"
+                class="px-2 py-1 border border-gray-200 rounded bg-white text-gray-700 font-semibold focus:outline-none focus:border-brand-orange cursor-pointer"
+              >
+                <option :value="5">5</option>
+                <option :value="10">10</option>
+                <option :value="20">20</option>
+                <option :value="50">50</option>
+                <option :value="100">100</option>
+              </select>
+              <span class="text-gray-400 font-medium ml-1">
+                Menampilkan {{ programStartIndex + 1 }}-{{ Math.min(programEndIndex, beasiswaData.perProgram.length) }} dari {{ beasiswaData.perProgram.length }} data
+              </span>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button 
+                @click="prevProgramPage" 
+                :disabled="programPage === 1"
+                class="p-1.5 border border-gray-200 rounded bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center"
+                title="Halaman sebelumnya"
+              >
+                <i class="fa-solid fa-chevron-left text-[9px]"></i>
+              </button>
+              
+              <button 
+                v-for="page in totalProgramPages" 
+                :key="page"
+                @click="programPage = page"
+                class="px-2.5 py-1 border rounded text-[10px] font-bold transition-all cursor-pointer"
+                :class="programPage === page ? 'bg-brand-orange border-brand-orange text-white' : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'"
+              >
+                {{ page }}
+              </button>
+
+              <button 
+                @click="nextProgramPage" 
+                :disabled="programPage === totalProgramPages"
+                class="p-1.5 border border-gray-200 rounded bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center"
+                title="Halaman berikutnya"
+              >
+                <i class="fa-solid fa-chevron-right text-[9px]"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -225,7 +357,7 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
-                <tr v-for="prog in beasiswaData.perProgram" :key="prog.programId" class="hover:bg-gray-50/50">
+                <tr v-for="prog in paginatedBeasiswaPrograms" :key="prog.programId" class="hover:bg-gray-50/50">
                   <td class="py-3 px-4 font-semibold text-gray-900">{{ prog.programName }}</td>
                   <td class="py-3 px-4 text-center font-medium text-gray-600">{{ prog.totalPengajuan }}</td>
                   <td class="py-3 px-4 text-center font-bold text-emerald-600">{{ prog.totalDiterima }}</td>
@@ -236,6 +368,57 @@
               </tbody>
             </table>
           </div>
+
+          <!-- Pagination Controls for Programs (General) -->
+          <div v-if="beasiswaData.perProgram && beasiswaData.perProgram.length > 0" class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100 flex-wrap gap-3 text-xs select-none">
+            <div class="flex items-center gap-2">
+              <span class="text-gray-500 font-medium">Tampilkan per halaman:</span>
+              <select 
+                v-model="programPerPage" 
+                @change="programPage = 1"
+                class="px-2 py-1 border border-gray-200 rounded bg-white text-gray-700 font-semibold focus:outline-none focus:border-brand-orange cursor-pointer"
+              >
+                <option :value="5">5</option>
+                <option :value="10">10</option>
+                <option :value="20">20</option>
+                <option :value="50">50</option>
+                <option :value="100">100</option>
+              </select>
+              <span class="text-gray-400 font-medium ml-1">
+                Menampilkan {{ programStartIndex + 1 }}-{{ Math.min(programEndIndex, beasiswaData.perProgram.length) }} dari {{ beasiswaData.perProgram.length }} data
+              </span>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button 
+                @click="prevProgramPage" 
+                :disabled="programPage === 1"
+                class="p-1.5 border border-gray-200 rounded bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center"
+                title="Halaman sebelumnya"
+              >
+                <i class="fa-solid fa-chevron-left text-[9px]"></i>
+              </button>
+              
+              <button 
+                v-for="page in totalProgramPages" 
+                :key="page"
+                @click="programPage = page"
+                class="px-2.5 py-1 border rounded text-[10px] font-bold transition-all cursor-pointer"
+                :class="programPage === page ? 'bg-brand-orange border-brand-orange text-white' : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'"
+              >
+                {{ page }}
+              </button>
+
+              <button 
+                @click="nextProgramPage" 
+                :disabled="programPage === totalProgramPages"
+                class="p-1.5 border border-gray-200 rounded bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center"
+                title="Halaman berikutnya"
+              >
+                <i class="fa-solid fa-chevron-right text-[9px]"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -243,7 +426,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
 import api from '../../services/api';
 
@@ -256,6 +439,76 @@ const beasiswaKajurData = ref(null);
 const beasiswaJurusanDist = ref({});
 const beasiswaFundingDist = ref({});
 const beasiswaActivePrograms = ref([]);
+
+// Pagination States: Jurusan Table
+const jurusanPage = ref(1);
+const jurusanPerPage = ref(10);
+
+const paginatedBeasiswaJurusan = computed(() => {
+  const list = beasiswaJurusanDist.value.data || [];
+  const start = (jurusanPage.value - 1) * jurusanPerPage.value;
+  return list.slice(start, start + jurusanPerPage.value);
+});
+
+const totalJurusanPages = computed(() => {
+  const list = beasiswaJurusanDist.value.data || [];
+  return Math.ceil(list.length / jurusanPerPage.value) || 1;
+});
+
+const jurusanStartIndex = computed(() => {
+  return (jurusanPage.value - 1) * jurusanPerPage.value;
+});
+
+const jurusanEndIndex = computed(() => {
+  return jurusanStartIndex.value + jurusanPerPage.value;
+});
+
+watch(jurusanPerPage, () => {
+  jurusanPage.value = 1;
+});
+
+function prevJurusanPage() {
+  if (jurusanPage.value > 1) jurusanPage.value--;
+}
+
+function nextJurusanPage() {
+  if (jurusanPage.value < totalJurusanPages.value) jurusanPage.value++;
+}
+
+// Pagination States: Programs Table
+const programPage = ref(1);
+const programPerPage = ref(10);
+
+const paginatedBeasiswaPrograms = computed(() => {
+  const list = beasiswaData.value?.perProgram || [];
+  const start = (programPage.value - 1) * programPerPage.value;
+  return list.slice(start, start + programPerPage.value);
+});
+
+const totalProgramPages = computed(() => {
+  const list = beasiswaData.value?.perProgram || [];
+  return Math.ceil(list.length / programPerPage.value) || 1;
+});
+
+const programStartIndex = computed(() => {
+  return (programPage.value - 1) * programPerPage.value;
+});
+
+const programEndIndex = computed(() => {
+  return programStartIndex.value + programPerPage.value;
+});
+
+watch(programPerPage, () => {
+  programPage.value = 1;
+});
+
+function prevProgramPage() {
+  if (programPage.value > 1) programPage.value--;
+}
+
+function nextProgramPage() {
+  if (programPage.value < totalProgramPages.value) programPage.value++;
+}
 const beasiswaVerificationStages = ref({});
 const beasiswaRecentActivities = ref([]);
 const beasiswaErrors = ref({});

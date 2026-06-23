@@ -42,34 +42,128 @@
           </div>
         </div>
 
-        <div class="space-y-3">
+        <div v-if="prestasiIkuTrend.data && prestasiIkuTrend.data.length > 0" class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4">
+          <!-- Left Column: Table with pagination -->
+          <div class="space-y-3">
+            <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wide">Sebaran Tingkat Prestasi per Skala Lomba (IKU)</h4>
+            <div class="overflow-x-auto rounded-xl border border-gray-100/70">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <th class="py-3 px-4 font-bold text-gray-700">Tahun</th>
+                    <th class="py-3 px-4 font-bold text-gray-700 text-center">Internasional</th>
+                    <th class="py-3 px-4 font-bold text-gray-700 text-center">Nasional</th>
+                    <th class="py-3 px-4 font-bold text-gray-700 text-center">Regional</th>
+                    <th class="py-3 px-4 font-bold text-gray-700 text-center">Lokal</th>
+                    <th class="py-3 px-4 font-bold text-gray-700 text-center">Total Poin IKU</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  <tr v-for="row in paginatedPrestasiIku" :key="row.tahun" class="hover:bg-gray-50/50">
+                    <td class="py-3 px-4 font-semibold text-gray-900 tracking-wide">{{ row.tahun }}</td>
+                    <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.INTERNASIONAL || 0 }} Poin</td>
+                    <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.NASIONAL || 0 }} Poin</td>
+                    <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.REGIONAL || 0 }} Poin</td>
+                    <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.LOKAL || 0 }} Poin</td>
+                    <td class="py-3 px-4 text-center font-bold text-brand-orange">{{ row.totalIkuPoin }} Poin IKU</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100 flex-wrap gap-3 text-xs select-none">
+              <div class="flex items-center gap-2">
+                <span class="text-gray-500 font-medium">Tampilkan per halaman:</span>
+                <select 
+                  v-model="perPage" 
+                  @change="currentPage = 1"
+                  class="px-2 py-1 border border-gray-200 rounded bg-white text-gray-700 font-semibold focus:outline-none focus:border-brand-orange cursor-pointer"
+                >
+                  <option :value="5">5</option>
+                  <option :value="10">10</option>
+                  <option :value="20">20</option>
+                  <option :value="50">50</option>
+                  <option :value="100">100</option>
+                </select>
+                <span class="text-gray-400 font-medium ml-1">
+                  Menampilkan {{ startIndex + 1 }}-{{ Math.min(endIndex, prestasiIkuTrend.data.length) }} dari {{ prestasiIkuTrend.data.length }} data
+                </span>
+              </div>
+
+              <div class="flex items-center gap-1.5">
+                <button 
+                  @click="prevPage" 
+                  :disabled="currentPage === 1"
+                  class="p-1.5 border border-gray-200 rounded bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center"
+                  title="Halaman sebelumnya"
+                >
+                  <i class="fa-solid fa-chevron-left text-[9px]"></i>
+                </button>
+                
+                <button 
+                  v-for="page in totalPages" 
+                  :key="page"
+                  @click="currentPage = page"
+                  class="px-2.5 py-1 border rounded text-[10px] font-bold transition-all cursor-pointer"
+                  :class="currentPage === page ? 'bg-brand-orange border-brand-orange text-white' : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'"
+                >
+                  {{ page }}
+                </button>
+
+                <button 
+                  @click="nextPage" 
+                  :disabled="currentPage === totalPages"
+                  class="p-1.5 border border-gray-200 rounded bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center"
+                  title="Halaman berikutnya"
+                >
+                  <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Visual analytics chart (Tren Total Poin IKU) -->
+          <div class="bg-gray-50/50 p-5 rounded-2xl border border-gray-100/70 flex flex-col justify-between h-full">
+            <div>
+              <h4 class="text-xs font-bold text-gray-855 uppercase tracking-wide">Tren Total Poin IKU Per Tahun</h4>
+              <p class="text-[10px] text-gray-400 font-semibold mt-0.5">Analisis pertumbuhan kontribusi poin IKU dari prestasi mahasiswa.</p>
+            </div>
+            
+            <div class="flex items-end justify-between h-44 mt-6 px-2 border-b border-gray-200 pb-2">
+              <div v-for="row in prestasiIkuTrend.data" :key="row.tahun" class="flex flex-col items-center gap-2 group flex-1">
+                <!-- Tooltip -->
+                <div class="relative flex flex-col items-center">
+                  <div class="absolute bottom-full mb-2 bg-slate-900 text-white text-[9px] font-bold py-1.5 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-lg leading-normal text-left">
+                    <p class="font-extrabold text-[10px] text-brand-orange border-b border-gray-700 pb-1 mb-1">Tahun {{ row.tahun }}</p>
+                    <p>Total: {{ row.totalIkuPoin }} Poin</p>
+                    <div class="text-gray-300 text-[8px] mt-0.5 space-y-0.5 font-medium">
+                      <p>• Internasional: {{ row.perSkala?.INTERNASIONAL || 0 }} Poin</p>
+                      <p>• Nasional: {{ row.perSkala?.NASIONAL || 0 }} Poin</p>
+                      <p>• Regional: {{ row.perSkala?.REGIONAL || 0 }} Poin</p>
+                      <p>• Lokal: {{ row.perSkala?.LOKAL || 0 }} Poin</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Bar -->
+                  <div 
+                    class="w-7 sm:w-8 bg-gradient-to-t from-brand-orange to-amber-500 rounded-t transition-all duration-500 hover:brightness-110 flex flex-col justify-end pb-1.5 cursor-pointer"
+                    :style="{ height: getIkuBarHeight(row.totalIkuPoin) + 'px' }"
+                  >
+                    <span class="text-[9px] font-bold text-white text-center block select-none">{{ row.totalIkuPoin }}</span>
+                  </div>
+                </div>
+                <!-- Year Label -->
+                <span class="text-[10px] font-bold text-gray-500">{{ row.tahun }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="space-y-3">
           <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wide">Sebaran Tingkat Prestasi per Skala Lomba (IKU)</h4>
           <div v-if="prestasiErrors.iku" class="text-xs text-red-500 font-semibold mb-2">⚠️ {{ prestasiErrors.iku }}</div>
-          <div v-else-if="!prestasiIkuTrend.data || prestasiIkuTrend.data.length === 0" class="text-xs text-gray-400">Tidak ada data tren IKU.</div>
-          <div v-else class="overflow-x-auto rounded-xl border border-gray-100/70">
-            <table class="w-full text-left border-collapse text-xs">
-              <thead>
-                <tr class="bg-gray-50 border-b border-gray-100">
-                  <th class="py-3 px-4 font-bold text-gray-700">Tahun</th>
-                  <th class="py-3 px-4 font-bold text-gray-700 text-center">Internasional</th>
-                  <th class="py-3 px-4 font-bold text-gray-700 text-center">Nasional</th>
-                  <th class="py-3 px-4 font-bold text-gray-700 text-center">Regional</th>
-                  <th class="py-3 px-4 font-bold text-gray-700 text-center">Lokal</th>
-                  <th class="py-3 px-4 font-bold text-gray-700 text-center">Total Poin IKU</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr v-for="row in prestasiIkuTrend.data" :key="row.tahun" class="hover:bg-gray-50/50">
-                  <td class="py-3 px-4 font-semibold text-gray-900 tracking-wide">{{ row.tahun }}</td>
-                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.INTERNASIONAL || 0 }} Poin</td>
-                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.NASIONAL || 0 }} Poin</td>
-                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.REGIONAL || 0 }} Poin</td>
-                  <td class="py-3 px-4 text-center font-semibold text-indigo-600">{{ row.perSkala?.LOKAL || 0 }} Poin</td>
-                  <td class="py-3 px-4 text-center font-bold text-brand-orange">{{ row.totalIkuPoin }} Poin IKU</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <div v-else class="text-xs text-gray-400">Tidak ada data tren IKU.</div>
         </div>
       </div>
 
@@ -171,7 +265,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
 import api from '../../services/api';
 
@@ -185,6 +279,54 @@ const prestasiInterestDist = ref({});
 const prestasiGagalTanding = ref(null);
 const prestasiLeadTime = ref(null);
 const prestasiErrors = ref({});
+
+// Pagination States
+const currentPage = ref(1);
+const perPage = ref(10);
+
+const paginatedPrestasiIku = computed(() => {
+  const list = prestasiIkuTrend.value.data || [];
+  const start = (currentPage.value - 1) * perPage.value;
+  return list.slice(start, start + perPage.value);
+});
+
+const totalPages = computed(() => {
+  const list = prestasiIkuTrend.value.data || [];
+  return Math.ceil(list.length / perPage.value) || 1;
+});
+
+const startIndex = computed(() => {
+  return (currentPage.value - 1) * perPage.value;
+});
+
+const endIndex = computed(() => {
+  return startIndex.value + perPage.value;
+});
+
+watch(perPage, () => {
+  currentPage.value = 1;
+});
+
+function prevPage() {
+  if (currentPage.value > 1) currentPage.value--;
+}
+
+function nextPage() {
+  if (currentPage.value < totalPages.value) currentPage.value++;
+}
+
+// Chart Helper: Calculate dynamic bar height
+const maxIkuPoin = computed(() => {
+  const list = prestasiIkuTrend.value.data || [];
+  if (list.length === 0) return 1;
+  return Math.max(...list.map(r => r.totalIkuPoin || 0));
+});
+
+function getIkuBarHeight(poin) {
+  const max = maxIkuPoin.value;
+  // Let the maximum height be 120px
+  return Math.round((poin / max) * 120) || 10;
+}
 
 function formatDate(isoStr) {
   if (!isoStr) return '-';

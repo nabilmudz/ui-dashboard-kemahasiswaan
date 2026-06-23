@@ -58,13 +58,19 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(loadStoredUser());
 
   function setTokens(tokens) {
-    if (tokens.access_token) {
+    if (tokens && tokens.access_token) {
       accessToken.value = tokens.access_token;
       localStorage.setItem('access_token', tokens.access_token);
+    } else {
+      accessToken.value = null;
+      localStorage.removeItem('access_token');
     }
-    if (tokens.refresh_token) {
+    if (tokens && tokens.refresh_token) {
       refreshToken.value = tokens.refresh_token;
       localStorage.setItem('refresh_token', tokens.refresh_token);
+    } else {
+      refreshToken.value = null;
+      localStorage.removeItem('refresh_token');
     }
   }
 
@@ -87,6 +93,9 @@ export const useAuthStore = defineStore('auth', () => {
   async function login({ identifier, password }) {
     loading.value = true;
     try {
+      // Clear any existing session details to prevent cross-contamination of access tokens
+      clearAuth();
+
       const payload = { password };
       
       // Determine if numeric (NIM) or otherwise (NPA)
@@ -133,11 +142,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  // Fetch updated user and module accesses
   async function fetchCurrentUser() {
     try {
       const response = await api.get('/dashboard/me');
-      const data = response.data;
+      const data = response.data?.data || response.data;
       
       const profile = {
         id: data.userId || data.sub || user.value?.id,
