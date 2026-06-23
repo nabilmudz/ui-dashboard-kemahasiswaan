@@ -20,14 +20,14 @@
           class="logo_name text-[16px] font-semibold truncate text-black transition-opacity duration-300 ml-1"
           :class="[isCollapsed ? 'opacity-0 pointer-events-none' : 'opacity-100']"
         >
-          Farraskuy Shop
+          SSO Dashboard
         </span>
       </router-link>
     </div>
 
     <!-- Navigation Links -->
     <ul class="nav-links flex-1 py-0 px-0 pb-[115px] overflow-y-auto overflow-x-visible no-scrollbar list-none" style="padding-bottom: 115px;">
-      <!-- Single Menu Item Example (Home) -->
+      <!-- Home -->
       <SidebarItem 
         to="/" 
         icon="fa-regular fa-house" 
@@ -35,21 +35,41 @@
         :is-collapsed="isCollapsed" 
       />
 
-      <!-- Dropdown / Multi-Level Item Example (Data Barang with 1 sub-item) -->
+      <!-- Analytical Dashboard (With role-based dropdown child submenus) -->
       <SidebarItem 
-        icon="fa-light fa-box" 
-        label="Data Barang" 
+        to="/analytics" 
+        icon="fa-regular fa-chart-column" 
+        label="Dashboard" 
+        :is-collapsed="isCollapsed" 
+        :children="dashboardChildren"
+      />
+
+      <!-- Dynamic Integrated Apps Dropdown -->
+      <SidebarItem 
+        v-if="appChildren.length > 0"
+        icon="fa-regular fa-grid-2" 
+        label="Aplikasi Layanan" 
         :is-collapsed="isCollapsed"
-        :children="[
-          { to: '/barang', icon: 'fa-regular fa-book', label: 'Daftar Barang' }
-        ]"
+        :children="appChildren"
+      />
+
+      <!-- SSO Profile -->
+      <SidebarItem 
+        to="/sso-profile" 
+        icon="fa-regular fa-user" 
+        label="Profil SSO" 
+        :is-collapsed="isCollapsed" 
       />
     </ul>
   </aside>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { useAuthStore } from '../../stores/auth';
 import SidebarItem from './SidebarItem.vue';
+
+const authStore = useAuthStore();
 
 defineProps({
   isCollapsed: {
@@ -58,8 +78,82 @@ defineProps({
   }
 });
 
+const isMahasiswa = computed(() => authStore.user?.role === 'MAHASISWA');
+const isKajur = computed(() => authStore.user?.role === 'KAJUR');
+const isAdmin = computed(() => ['STAFF', 'WD3', 'KLI'].includes(authStore.user?.role));
+
+const allowedAppSources = computed(() => {
+  return (authStore.user?.accessibleApps || []).map(app => {
+    return typeof app === 'string' ? app : app.appSource;
+  });
+});
+
+const dashboardChildren = computed(() => {
+  if (isMahasiswa.value) return [];
+  
+  const children = [
+    { to: '/analytics?tab=overview', label: 'Ringkasan Statistik', icon: 'fa-regular fa-chart-pie' },
+    { to: '/analytics?tab=proposals', label: 'Antrean Pending', icon: 'fa-regular fa-list-check' }
+  ];
+
+  if (allowedAppSources.value.includes('PKM') && isAdmin.value) {
+    children.push({ to: '/analytics?tab=pkm', label: 'PKM', icon: 'fa-regular fa-lightbulb' });
+  }
+  if (allowedAppSources.value.includes('PMW') && isAdmin.value) {
+    children.push({ to: '/analytics?tab=pmw', label: 'PMW', icon: 'fa-regular fa-briefcase' });
+  }
+  if (allowedAppSources.value.includes('BEASISWA') && (isAdmin.value || isKajur.value)) {
+    children.push({ to: '/analytics?tab=beasiswa', label: 'Proposal', icon: 'fa-regular fa-file-signature' });
+  }
+  if (allowedAppSources.value.includes('PRESTASI') && isAdmin.value) {
+    children.push({ to: '/analytics?tab=prestasi', label: 'Kompetisi & Prestasi', icon: 'fa-regular fa-trophy' });
+  }
+  if (allowedAppSources.value.includes('SARPRAS') && isAdmin.value) {
+    children.push({ to: '/analytics?tab=recap', label: 'Rekap Ormawa', icon: 'fa-regular fa-chart-column' });
+    children.push({ to: '/analytics?tab=venues', label: 'Okupansi Venue', icon: 'fa-regular fa-door-open' });
+  }
+
+  return children;
+});
+
+const appChildren = computed(() => {
+  return (authStore.user?.accessibleApps || []).map(app => {
+    const source = typeof app === 'string' ? app : app.appSource;
+    const isAvailable = typeof app === 'string' ? true : app.isAvailable;
+    const deepLinkUrl = typeof app === 'string' ? '#' : app.deepLinkUrl;
+
+    let icon = 'fa-regular fa-globe';
+    let label = source;
+    if (source === 'PKM') {
+      icon = 'fa-regular fa-lightbulb';
+      label = 'PKM';
+    } else if (source === 'PMW') {
+      icon = 'fa-regular fa-briefcase';
+      label = 'PMW';
+    } else if (source === 'BEASISWA') {
+      icon = 'fa-regular fa-file-signature';
+      label = 'Proposal';
+    } else if (source === 'PRESTASI') {
+      icon = 'fa-regular fa-trophy';
+      label = 'Lapor Kompetisi & Prestasi';
+    } else if (source === 'KA_ORMAWA') {
+      icon = 'fa-regular fa-users';
+      label = 'Ka-Ormawa';
+    } else if (source === 'SARPRAS') {
+      icon = 'fa-regular fa-building';
+      label = 'Sarpras';
+    }
+    
+    return {
+      href: deepLinkUrl,
+      icon: icon,
+      label: label
+    };
+  });
+});
+
 function onImgError(e) {
-  e.target.src = 'https://ui-avatars.com/api/?name=FK&background=f9d428&color=000&bold=true';
+  e.target.src = 'https://ui-avatars.com/api/?name=FK&background=ff6b35&color=fff&bold=true';
 }
 </script>
 

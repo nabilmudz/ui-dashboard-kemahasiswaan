@@ -1,80 +1,71 @@
 <template>
-  <div class="w-screen h-screen flex justify-center items-center bg-[#ffd72f] font-sans p-4">
-    <!-- Login Container -->
-    <div class="flex border border-gray-150 rounded-[30px] p-3 bg-white shadow-lg box-area overflow-hidden w-[600px] h-[480px]">
-      
-      <!-- Left Box -->
-      <div 
-        class="hidden sm:flex col-md-5 rounded-[20px] flex-col justify-center items-center left-box w-[220px] h-full"
-        :style="{ backgroundImage: 'url(' + loginImg + ')' }"
-      ></div>
-      
-      <!-- Right Box -->
-      <form 
-        @submit.prevent="handleLogin" 
-        class="flex-1 right-box flex items-center h-full pl-6"
-      >
-        <div class="w-full flex flex-col justify-between py-4 pr-3">
-          <!-- Logo & Header -->
-          <div class="flex items-center gap-3 mb-6">
-            <img :src="logoImg" alt="logo" width="50" height="50">
-            <div class="header-text text-left">
-              <h2 class="font-semibold m-0 text-gray-900 leading-tight" style="font-size: 20px">Login</h2>
-              <p class="font-semibold m-0 text-[13px] text-gray-800 leading-tight mt-0.5">Aplikasi Penjualan | POS Application</p>
-            </div>
-          </div>
+  <div class="min-h-screen w-screen flex flex-col justify-center items-center bg-[#f8f9fa] font-sans p-4 relative">
+    <!-- Top-left Brand Logo -->
+    <!-- <div class="sm:absolute sm:top-8 sm:left-8 flex items-center gap-2 mb-8 sm:mb-0 select-none">
+      <img :src="logoImg" alt="logo" class="w-8 h-8 object-contain">
+      <span class="font-bold text-slate-800 text-lg">SSO Gateway</span>
+    </div> -->
 
-          <!-- Error Feedback -->
-          <div v-if="error" class="alert alert-danger bg-red-50 text-red-600 border border-red-100 rounded-lg p-2.5 text-xs text-left mb-3">
-            {{ errorMessage }}
-          </div>
+    <!-- Login Card -->
+    <form 
+      @submit.prevent="handleLogin" 
+      class="w-full max-w-[440px] bg-white border border-slate-200/60 rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.015)]"
+    >
+      <!-- Header -->
+      <div class="text-left mb-8">
+        <p class="text-slate-500 text-sm font-medium mb-1">Silakan masukkan detail akun Anda</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">Selamat datang kembali</h2>
+      </div>
 
-          <!-- Input Fields -->
-          <div class="text-left">
-            <div class="mb-3">
-              <label for="username" class="form-label text-[14px] text-gray-700 font-semibold mb-1 block must-filled">Nama Pengguna</label>
-              <input 
-                v-model="username" 
-                type="text" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-full text-[14px] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium" 
-                id="username" 
-                name="username" 
-                autofocus
-                required
-              >
-            </div>
-            <div class="mb-5">
-              <label for="password" class="form-label text-[14px] text-gray-700 font-semibold mb-1 block must-filled">Password</label>
-              <input 
-                v-model="password" 
-                type="password" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-full text-[14px] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium" 
-                id="password" 
-                name="password"
-                required
-              >
-            </div>
-          </div>
+      <!-- Error Feedback -->
+      <div v-if="error" class="bg-rose-50/50 text-rose-600 border border-rose-100 rounded-xl p-3 text-xs text-left mb-5 font-semibold">
+        {{ errorMessage }}
+      </div>
 
-          <!-- Login Actions -->
-          <div>
-            <button 
-              type="submit" 
-              :disabled="loading" 
-              class="w-full btn font-semibold text-white rounded-full py-2.5 transition-all flex items-center justify-center gap-1.5 cursor-pointer border-0 select-none text-[14px] disabled:opacity-80" 
-              style="background-color: #ffa857"
-            >
-              <span>Masuk</span>
-              <i 
-                class="fa-duotone fa-spinner-third fa-spin transition-all duration-300"
-                :class="[loading ? 'opacity-100 w-fit' : 'opacity-0 w-0']"
-              ></i>
-            </button>
-          </div>
+      <!-- Input Fields -->
+      <div class="text-left mb-8">
+        <div class="mb-5">
+          <label for="username" class="form-label text-[13px] text-slate-600 font-semibold mb-1.5 block must-filled">NIM / NPA</label>
+          <input 
+            v-model="username" 
+            type="text" 
+            class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none transition-all font-medium bg-white text-slate-800 placeholder:text-slate-400" 
+            id="username" 
+            name="username" 
+            placeholder="Masukkan NIM atau NPA"
+            autofocus
+            required
+          >
         </div>
-      </form>
+        <div>
+          <label for="password" class="form-label text-[13px] text-slate-600 font-semibold mb-1.5 block must-filled">Password</label>
+          <input 
+            v-model="password" 
+            type="password" 
+            class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none transition-all font-medium bg-white text-slate-800 placeholder:text-slate-400" 
+            id="password" 
+            name="password"
+            placeholder="Masukkan password SSO"
+            required
+          >
+        </div>
+      </div>
 
-    </div>
+      <!-- Login Actions -->
+      <div>
+        <button 
+          type="submit" 
+          :disabled="loading" 
+          class="w-full font-semibold text-white rounded-xl py-3 transition-all flex items-center justify-center gap-1.5 cursor-pointer border-0 select-none text-sm disabled:opacity-80 bg-brand-orange hover:bg-[#1d4ed8] active:bg-[#1e40af] shadow-sm shadow-blue-500/10"
+        >
+          <span>Masuk</span>
+          <i 
+            class="fa-solid fa-spinner fa-spin transition-all duration-300"
+            :class="[loading ? 'opacity-100 w-fit' : 'opacity-0 w-0']"
+          ></i>
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -82,7 +73,6 @@
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
-import loginImg from '../assets/login.jpg';
 import logoImg from '../assets/logo.png';
 
 const authStore = useAuthStore();
@@ -99,24 +89,33 @@ async function handleLogin() {
   loading.value = true;
   error.value = false;
   
-  // Simulate network check delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
   try {
-    // Generate dummy JWT token (simulating bypass validation)
-    const mockAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkZhcnJhcyBLdXkiLCJ1c2VybmFtZSI6ImZhcnJhc2t1eSIsInJvbGUiOiJTdXBlciBBZG1pbiIsImZvdG8iOiJkZWZhdWx0LnBuZyIsImV4cCI6MTgwNzkwMDYwMH0.signature';
-    const mockRefreshToken = 'mock_refresh_token_xyz_12345';
-    
-    authStore.setTokens({
-      access_token: mockAccessToken,
-      refresh_token: mockRefreshToken
+    // Call the integrated store login API
+    await authStore.login({
+      identifier: username.value,
+      password: password.value
     });
     
+    // Redirect to requested page or home
     const redirect = route.query.redirect || '/';
     router.push(redirect);
   } catch (err) {
     error.value = true;
-    errorMessage.value = 'Nama pengguna atau password salah.';
+    if (err.response && err.response.data && err.response.data.message) {
+      errorMessage.value = err.response.data.message;
+    } else if (err.response && err.response.data && err.response.data.error) {
+      // Map common backend error codes to user-friendly messages
+      const errCode = err.response.data.error;
+      if (errCode === 'INVALID_CREDENTIAL') {
+        errorMessage.value = 'NIM/NPA atau password salah.';
+      } else {
+        errorMessage.value = errCode;
+      }
+    } else if (err.response && err.response.status === 401) {
+      errorMessage.value = 'NIM/NPA atau password salah.';
+    } else {
+      errorMessage.value = 'Gagal terhubung ke SSO. Cek koneksi Anda.';
+    }
   } finally {
     loading.value = false;
   }
@@ -124,51 +123,14 @@ async function handleLogin() {
 </script>
 
 <style scoped>
-/* Scoped CSS replication matching login-style2.css */
-.box-area {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-}
-
-.left-box {
-  background-color: #ffd72f;
-  filter: brightness(0.8);
-  background-size: cover;
-  background-position-x: center;
-  animation: scrolling 150s infinite linear;
-}
-
-@keyframes scrolling {
-  to {
-    background-position-y: 100%;
-  }
-}
-
 .must-filled::before {
   content: '* ';
-  color: red;
+  color: #ef4444;
   font-size: 14px;
 }
 
-/* Form input custom focusing to replicate form-control styles */
 input:focus {
-  box-shadow: 0 0 0 0.2rem rgba(255, 168, 87, 0.25);
-}
-
-@media only screen and (max-width: 768px) {
-  .box-area {
-    width: min(400px, calc(100vw - 32px)) !important;
-    height: auto !important;
-    flex-direction: column !important;
-    border-radius: 20px !important;
-  }
-  .left-box {
-    width: 100% !important;
-    height: 120px !important;
-    border-radius: 12px !important;
-  }
-  .right-box {
-    padding-left: 0 !important;
-    width: 100% !important;
-  }
+  box-shadow: 0 0 0 4px rgba(241, 245, 249, 1);
+  border-color: #cbd5e1;
 }
 </style>

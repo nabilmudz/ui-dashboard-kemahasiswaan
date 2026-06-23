@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-    <div class="w-full max-w-sm bg-white border border-gray-150 rounded-2xl p-8 shadow-xl text-center flex flex-col items-center">
+    <div class="w-full max-w-sm bg-white rounded-2xl p-8 shadow-xl text-center flex flex-col items-center">
       <!-- Loading Spinner -->
       <div v-if="loading" class="flex flex-col items-center">
         <i class="fa-solid fa-spinner-third fa-spin text-4xl text-indigo-600 mb-6"></i>

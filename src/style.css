@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-yellow: #f9d428;
-  --color-brand-accent: #ffeeaf;
-  --color-sidebar-active-bg: #ffeeaf;
+  --color-brand-yellow: #2563eb; /* Bright blue replacing orange/yellow */
+  --color-brand-orange: #2563eb;
+  --color-brand-accent: #dbeafe; /* Soft blue background for active/hover */
+  --color-sidebar-active-bg: #dbeafe;
   --color-sidebar-normal-text: rgba(0, 0, 0, 0.8);
-  --color-sidebar-hover-text: #000000;
+  --color-sidebar-hover-text: #1d4ed8;
   
   --font-sans: 'Poppins', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
   
@@ -34,4 +35,14 @@
   background-color: #94a3b8;
   border: 2px solid transparent;
   background-clip: content-box;
+}
+
+/* Force regular/light Font Awesome icons to remain outline style (prevent fallback to solid from bold containers) */
+.fa-regular, .far {
+  font-family: "Font Awesome 6 Pro" !important;
+  font-weight: 400 !important;
+}
+.fa-light, .fal {
+  font-family: "Font Awesome 6 Pro" !important;
+  font-weight: 300 !important;
 }

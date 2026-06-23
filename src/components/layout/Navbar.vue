@@ -21,7 +21,7 @@
           <div style="height: 45px; width: 170px;" class="flex items-center gap-1.5 text-left">
             <!-- Left Texts -->
             <div class="text-black col-9 flex flex-col justify-center flex-1 min-w-0 pr-1">
-              <small class="p-0 m-0 font-semibold text-[13px] leading-tight truncate block">{{ authStore.user?.username || 'Guest' }}</small>
+              <small class="p-0 m-0 font-semibold text-[13px] leading-tight truncate block">{{ authStore.user?.nama || 'Guest' }}</small>
               <small class="p-0 m-0 text-[12px] text-gray-500 leading-tight w-[75%] truncate block">{{ authStore.user?.role || 'Guest' }}</small>
             </div>
             <!-- Right Avatar -->
@@ -89,7 +89,7 @@ const dropdownRef = ref(null);
 const avatarUrl = computed(() => {
   const foto = authStore.user?.foto || 'default.png';
   if (foto === 'default.png' || foto.includes('default')) {
-    return 'https://ui-avatars.com/api/?name=' + encodeURIComponent(authStore.user?.nama || 'Guest') + '&background=ffeeaf&color=4338ca&bold=true';
+    return 'https://ui-avatars.com/api/?name=' + encodeURIComponent(authStore.user?.nama || 'Guest') + '&background=2563eb&color=fff&bold=true';
   }
   return foto;
 });

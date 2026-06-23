@@ -1,5 +1,22 @@
 <template>
-  <router-link :to="to" class="home-item group text-start select-none no-underline block">
+  <a v-if="href" :href="href" target="_blank" class="home-item group text-start select-none no-underline block">
+    <div class="flex items-center gap-3">
+      <!-- Left Icon -->
+      <i :class="[icon, 'icon']" :style="{ color: color }"></i>
+      
+      <!-- Right Texts -->
+      <div>
+        <p class="font-semibold m-0 text-gray-900 text-[14px] flex items-center leading-tight">
+          {{ title }}
+          <i class="fa-regular fa-arrow-right opacity-0 pl-0 w-2.5 group-hover:opacity-100 group-hover:pl-[5px] transition-all duration-100 ease-in text-gray-900"></i>
+        </p>
+        <p class="m-0 text-xs text-gray-400 group-hover:text-black transition-colors duration-100 leading-tight">
+          {{ description }}
+        </p>
+      </div>
+    </div>
+  </a>
+  <router-link v-else :to="to" class="home-item group text-start select-none no-underline block">
     <div class="flex items-center gap-3">
       <!-- Left Icon -->
       <i :class="[icon, 'icon']" :style="{ color: color }"></i>
@@ -22,7 +39,11 @@
 defineProps({
   to: {
     type: String,
-    required: true
+    default: ''
+  },
+  href: {
+    type: String,
+    default: ''
   },
   icon: {
     type: String,

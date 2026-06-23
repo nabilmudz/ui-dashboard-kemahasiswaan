@@ -2,7 +2,8 @@ import axios from 'axios';
 import { useAuthStore } from '../stores/auth';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://api.farraskuy.com/v1',
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -29,8 +30,16 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     const authStore = useAuthStore();
 
-    // Check if error is unauthorized (401) and we haven't retried yet
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Check if the failed request is an authentication request
+    const isAuthUrl = originalRequest.url && (
+      originalRequest.url.includes('/auth/sso/token') ||
+      originalRequest.url.includes('/auth/sso/refresh') ||
+      originalRequest.url.includes('/auth/sso/revoke') ||
+      originalRequest.url.includes('/auth/sso/callback')
+    );
+
+    // Check if error is unauthorized (401), we haven't retried yet, and it is NOT an authentication request
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthUrl) {
       originalRequest._retry = true;
 
       try {
