@@ -6,5 +6,8 @@
 </script>
 
 <style>
-/* Global styling adjustments can be declared here */
+h1 {
+  font-family: Poppins, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: -1.68px;
+}
 </style>

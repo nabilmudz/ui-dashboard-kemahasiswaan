@@ -6,7 +6,7 @@
     <!-- Page Title -->
     <div class="relative z-10 text-white mb-8">
       <h1 class="font-bold m-0 text-white text-[42px] tracking-tight leading-none">Dashboard</h1>
-      <p class="font-semibold text-black mt-1 text-sm opacity-90">
+      <p class="font-semibold text-black mt-1 text-base">
         {{ subviewDescription }}
       </p>
     </div>
@@ -34,7 +34,7 @@ const subviewDescription = computed(() => {
   if (isMahasiswa.value) {
     return 'Statistik pengajuan kegiatan dan status dokumen pribadi';
   }
-  return `Dasbor terpadu peran ${authStore.user?.role || ''}`;
+  return `Dasbor terpadu, ${authStore.user?.role || ''}`;
 });
 </script>
 

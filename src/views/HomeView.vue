@@ -6,7 +6,7 @@
     <!-- Welcome Header Texts -->
     <div class="relative z-10 text-white mb-8">
       <h1 class="font-bold m-0 text-white text-[48px] tracking-tight leading-none">Selamat Datang di,</h1>
-      <p class="font-semibold text-black mt-1 text-base">SSO Dashboard Kemahasiswaan Polban</p>
+      <p class="font-semibold text-black mt-1 text-base">Dashboard Kemahasiswaan Polban</p>
     </div>
     
     <!-- Card 1: Reusable Dynamic Quick Menu based on Permissions -->
@@ -212,10 +212,3 @@ onMounted(() => {
   fetchOpportunities();
 });
 </script>
-
-<style scoped>
-h1 {
-  font-family: Poppins, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  letter-spacing: -1.68px;
-}
-</style>

@@ -76,8 +76,8 @@ const routes = [
         ]
       },
       {
-        path: 'sso-profile',
-        name: 'sso-profile',
+        path: 'profile',
+        name: 'profile',
         component: ProfileView,
         meta: { requiresAuth: true }
       }

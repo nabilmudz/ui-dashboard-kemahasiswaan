@@ -17,7 +17,7 @@
           />
         </div>
         <span 
-          class="logo_name text-[16px] font-semibold truncate text-black transition-opacity duration-300 ml-1 leading-5"
+          class="logo_name text-[16px] font-semibold truncate text-black transition-opacity duration-300 ml-1 leading-tight"
           :class="[isCollapsed ? 'opacity-0 pointer-events-none' : 'opacity-100']"
         >
           Dashboard <br> Kemahasiswaan
@@ -55,7 +55,7 @@
 
       <!-- SSO Profile -->
       <SidebarItem 
-        to="/sso-profile" 
+        to="/profile" 
         icon="fa-regular fa-user" 
         label="Profil SSO" 
         :is-collapsed="isCollapsed" 
